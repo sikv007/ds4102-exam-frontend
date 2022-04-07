@@ -1,3 +1,18 @@
+@use "variables";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap");
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/containers";
+@import "../../../node_modules/bootstrap/scss/grid";
+@import "../../../node_modules/bootstrap/scss/utilities";
+@import "../../../node_modules/bootstrap/scss/utilities/api";
+@import "../../../node_modules/bootstrap/scss/root";
+@import "../../../node_modules/bootstrap/scss/reboot";
+
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Inter", sans-serif;
+  background-color: variables.$background-light-1;
+  color: variables.$background-dark-1;
 }

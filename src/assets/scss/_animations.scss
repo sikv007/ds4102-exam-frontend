@@ -1,25 +1,48 @@
 .nav {
-  &-enter-from, &-leave-to {
+  &-enter-from,
+  &-leave-to {
     transform: translateX(-100%);
   }
-  &-enter-to, &-leave-from {
+  &-enter-to,
+  &-leave-from {
     transform: translateX(0);
   }
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
     transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
   }
 }
 
 .route {
-  &-enter-from, &-leave-to {
+  &-enter-from,
+  &-leave-to {
     transform: translateX(20%);
     opacity: 0;
   }
-  &-enter-to, &-leave-from {
+  &-enter-to,
+  &-leave-from {
     transform: translateX(0);
     opacity: 1;
   }
-  &-enter-active, &-leave-active {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
+  }
+}
+
+.modal {
+  &-enter-from,
+  &-leave-to {
+    transform: translate(-50%, -50%) scale(0) !important;
+    opacity: 0;
+  }
+  &-enter-to,
+  &-leave-from {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  &-enter-active,
+  &-leave-active {
     transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
   }
 }

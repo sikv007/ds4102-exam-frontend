@@ -4,6 +4,7 @@
         :key="developer.id"
         :id="developer.id"
         :name="developer.name"
+        :job-title="developer.jobTitle"
       ></developers-item>
 </template>
 

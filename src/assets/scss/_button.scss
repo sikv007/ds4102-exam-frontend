@@ -1,0 +1,17 @@
+@use "variables";
+
+
+.btn {
+  border-radius: variables.$border-radius;
+  background: variables.$primary;
+  border: 0;
+  color: variables.$background-light-3;
+  box-shadow: variables.$shadow-small-2;
+  transition: variables.$transition;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: variables.$shadow-small;
+    background: variables.$primary-shade;
+  }
+}

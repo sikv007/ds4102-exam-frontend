@@ -1,0 +1,28 @@
+@use "variables";
+
+
+nav {
+  width: 50vw;
+  height: 100vh;
+  background: variables.$background-light-3;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  box-shadow: variables.$shadow-large;
+}
+
+.navigation-overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.hamburger {
+  width: 300px;
+  height: 20px;
+}

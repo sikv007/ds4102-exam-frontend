@@ -1,0 +1,38 @@
+.nav {
+  &-enter-from, &-leave-to {
+    transform: translateX(-100%);
+  }
+  &-enter-to, &-leave-from {
+    transform: translateX(0);
+  }
+  &-enter-active, &-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
+  }
+}
+
+.route {
+  &-enter-from, &-leave-to {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  &-enter-to, &-leave-from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  &-enter-active, &-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.5, 1);
+  }
+}
+
+.overlay-enter-from,
+.overlay-leave-to {
+  opacity: 0;
+}
+.overlay-enter-to,
+.overlay-leave-from {
+  opacity: 1;
+}
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: all 0.8s ease-in-out;
+}

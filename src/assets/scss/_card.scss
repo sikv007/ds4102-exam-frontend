@@ -6,21 +6,24 @@
   transition: variables.$transition;
   box-shadow: variables.$shadow-small-2;
 
-  a {
+
+
+  .h6 {
     color: variables.$primary;
   }
-  
+
   figure {
     overflow: hidden;
     width: 8rem;
     height: 8rem;
     border-radius: 50%;
+    
     img {
       transition: variables.$transition;
       width: 100%;
     }
   }
-  
+
   &:hover {
     transform: scale(1.1);
     color: variables.$primary;

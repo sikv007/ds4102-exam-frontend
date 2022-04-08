@@ -4,7 +4,7 @@
       <div v-if="show" class="modal-overlay"></div>
     </transition>
     <transition name="modal" mode="out-in" @after-enter="addModalClass" @before-leave="removeModalClass">
-      <div v-if="show" class="modal p-5" :class="modalClass">
+      <div v-if="show" class="modal" :class="modalClass">
          <slot></slot>
       </div>
     </transition>

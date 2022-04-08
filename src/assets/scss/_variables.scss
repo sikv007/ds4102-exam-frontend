@@ -9,8 +9,9 @@ $background-dark-3: #171717;
 $primary: #5158BB;
 $primary-shade: #181A38;
 $primary-tint: #DCDEF1;
+$primary-gradient: linear-gradient(#414696, $primary);
 
-$border-radius: 8px;
+$border-radius: 6px;
 
 $shadow-large: 0px 0px 40px 0 rgba(0, 0, 0, 0.05);
 $shadow-small: 0px 0px 20px 0 rgba(0, 0, 0, 0.05);

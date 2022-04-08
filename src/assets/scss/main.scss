@@ -24,8 +24,18 @@
 // @import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
 a {
   display: inline-block;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
 }
 
 .nav-link {
@@ -38,7 +48,6 @@ a {
 }
 
 .wrapper {
-  font-family: "Inter", sans-serif;
   background-color: variables.$background-light-1;
   color: variables.$primary-shade;
   // height: 100vh;

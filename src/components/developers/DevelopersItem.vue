@@ -12,7 +12,7 @@
       <div>
         <h4 class="fw-bold mb-0">{{ name }}</h4>
         <p>{{ jobTitle }}</p>
-        <!-- <base-button>Detaljer</base-button> -->
+        <p class="h6">Mer info &rarr;</p>
       </div>
     </article>
   </router-link>

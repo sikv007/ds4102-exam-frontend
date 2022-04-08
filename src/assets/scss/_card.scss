@@ -1,0 +1,29 @@
+@use "variables";
+
+.card {
+  background-color: variables.$background-light-2;
+  border-radius: variables.$border-radius;
+  transition: variables.$transition;
+  box-shadow: variables.$shadow-small-2;
+
+  
+  figure {
+    overflow: hidden;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    img {
+      transition: variables.$transition;
+      width: 100%;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    figure {
+      img {
+        transform: scale(1.2);
+      }
+    }
+  }
+}

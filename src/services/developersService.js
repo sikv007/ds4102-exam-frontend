@@ -6,8 +6,7 @@ const data = ref([]);
 
 const fetchDevelopers = async () => {
   const res = await axios.get(`${API_URL}developer`);
-  console.log(res.data);
-
+  console.log(res);
   res.data.forEach((dev) => {
     const developer = {
       id: dev.id,

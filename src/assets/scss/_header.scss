@@ -1,0 +1,32 @@
+@use "variables";
+
+header {
+  background-color: variables.$background-light-3;
+  box-shadow: variables.$shadow-small;
+
+  .hamburger {
+    border: 0;
+    width: 4rem;
+    background: none;
+    line-height: 0.8;
+    cursor: pointer;
+    
+    span {
+      background-color: variables.$primary-shade;
+      height: 4px;
+      width: 100%;
+      display: inline-block;
+      transition: variables.$transition;
+      border-radius: 2px;
+    }
+
+    &:hover {
+      span {
+        background-color: variables.$primary;
+      }
+      span:nth-child(2) {
+       transform: translateX(8px);
+      }
+    }
+  }
+}

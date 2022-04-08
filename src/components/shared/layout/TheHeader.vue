@@ -1,12 +1,22 @@
 <template>
-  <header>
-    <div class="container-fluid py-2 px-4">
-      <h3 @click="toggleNav"><i class="bi bi-list"></i></h3>
+  <header class="mb-5">
+    <div class="container-fluid py-4 px-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <button @click="toggleNav" class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <base-logo></base-logo>
+        <button @click="darkmode.setDarkMode">darkmode</button>
+      </div>
     </div>
   </header>
 </template>
 
 <script setup>
-const emit = defineEmits(["toggle-bav"]);
+import { useDarkModeService } from "../../../services/darkModeService";
+const darkmode = useDarkModeService();
+const emit = defineEmits(["toggle-nav"]);
 const toggleNav = () => emit("toggle-nav");
 </script>

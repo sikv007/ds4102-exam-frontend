@@ -13,6 +13,10 @@ const router = createRouter({
       path: "/utviklere",
       component: DevelopersView,
     },
+    {
+      path: "/utviklere/:navn",
+      component: DevelopersView,
+    },
   ],
 });
 

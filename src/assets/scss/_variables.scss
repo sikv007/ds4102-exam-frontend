@@ -1,10 +1,19 @@
 $background-light-1: #f5f5f5;
 $background-light-2: #e5e5e5;
 $background-light-3: #fafafa;
+
 $background-dark-1: #262626;
 $background-dark-2: #404040;
 $background-dark-3: #171717;
 
+$primary: #5158BB;
+$primary-shade: #181A38;
+$primary-tint: #DCDEF1;
+
 $border-radius: 16px;
 
-$shadow-large: 0px 0px 40px 0 rgba(0, 0, 0, 0.5);
+$shadow-large: 0px 0px 40px 0 rgba(0, 0, 0, 0.1);
+$shadow-small: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
+$shadow-small-2: 0px 4px 5px 0 rgba(0, 0, 0, 0.1);
+
+$transition: all 0.5s ease;

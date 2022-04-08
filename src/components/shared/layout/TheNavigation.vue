@@ -6,14 +6,20 @@
     <transition name="nav" mode="out-in">
       <nav v-if="show">
         <div class="container py-5 px-5">
-          <ul>
-            <li>
-              <router-link to="/" @click="close">Dashboard</router-link>
+          <base-logo class="pb-5" @click="close"></base-logo>
+          <ul class="nav flex-column h3">
+            <li class="nav-item">
+              <router-link to="/" class="nav-link px-0" @click="close"
+                >Dashboard</router-link
+              >
             </li>
-            <li>
-              <router-link to="/utviklere" @click="close">Utviklere</router-link>
+            <li class="nav-item">
+              <router-link to="/utviklere" class="nav-link px-0" @click="close"
+                >Utviklere</router-link
+              >
             </li>
           </ul>
+          <hr />
           <button @click="close">Close</button>
         </div>
       </nav>

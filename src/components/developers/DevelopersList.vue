@@ -5,6 +5,7 @@
         :id="developer.id"
         :name="developer.name"
         :job-title="developer.jobTitle"
+        :image="developer.image"
       ></developers-item>
 </template>
 

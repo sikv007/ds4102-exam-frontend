@@ -1,12 +1,10 @@
 <template>
-  <router-link class="col-12 col-md-6 col-xl-4 p-4" :to="`/utviklere/${id}`">
+  <router-link class="col-12 col-lg-6 col-xl-4 p-4" :to="`/utviklere/${id}`">
     <article class="card p-4 d-flex gap-4 align-items-center">
       <figure>
         <img
-          :src="`${HOST}src/img/developers/${name
-            .split(' ')[0]
-            .toLowerCase()}.jpg`"
-          alt=""
+          :src="image"
+          :alt="name"
         />
       </figure>
       <div>
@@ -20,8 +18,6 @@
 
 <script setup>
 // eslint-disable-next-line no-unused-vars
-import { HOST } from "../../config";
-// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   name: {
     type: String,
@@ -32,6 +28,9 @@ const props = defineProps({
   jobTitle: {
     type: String,
   },
+  image: {
+    type: String
+  }
 });
 </script>
 

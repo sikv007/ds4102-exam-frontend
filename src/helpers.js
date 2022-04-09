@@ -3,7 +3,7 @@ import { useDevelopersService } from "./services/developersService";
 
 export const init = () => {
   const devs = useDevelopersService();
-  devs.fetchDevelopers();
+  devs.getDevelopers();
 };
 
 export const getData = async (url) => {

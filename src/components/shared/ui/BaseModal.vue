@@ -30,7 +30,6 @@ const addModalClass = () => {
 
 const removeModalClass = () => {
   opened.value = false;
-  console.log(opened.value);
 }
 
 const modalClass = computed(() =>

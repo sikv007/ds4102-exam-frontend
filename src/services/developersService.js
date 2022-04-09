@@ -11,11 +11,13 @@ const getDevelopers = async () => {
   res.data.forEach((dev) => {
     const developer = {
       id: dev.id,
-      name: `${dev.firstName} ${dev.lastName}`,
+      firstName: dev.firstName,
+      lastName: dev.lastName,
       jobTitle: dev.jobTitle,
       phone: dev.phone,
       email: dev.email,
       skills: dev.skills.split(","),
+      dateOfBirth: dev.dateOfBirth,
       image: `${HOST}src/img/developers/${dev.image}`,
     };
     devs.push(developer);
@@ -39,12 +41,27 @@ const postDeveloper = async (developer, image) => {
     phone: developer.phone,
     jobTitle: developer.jobTitle,
     skills: developer.skills.join(","),
-    dateOfBirth: new Date(developer.dateOfBirth).toISOString(),
+    dateOfBirth: developer.dateOfBirth,
     image: image.get("file").name,
   };
   console.log(newDeveloper);
   await axios.post(`${API_URL}developer`, newDeveloper);
   await postImage(image);
+  await getDevelopers();
+};
+
+const putDeveloper = async (developer, image) => {
+  const editedDeveloper = {
+    id: developer.id,
+    firstName: developer.firstName,
+    lastName: developer.lastName,
+    phone: developer.phone,
+    jobTitle: developer.jobTitle,
+    skills: developer.skills.join(","),
+    dateOfBirth: developer.dateOfBirth,
+    image: "image.jpg",
+  };
+  await axios.put(`${API_URL}developer`, editedDeveloper);
   await getDevelopers();
 };
 
@@ -77,6 +94,18 @@ const skills = [
 
 const getAll = computed(() => data.value);
 
+const getOne = (id) => {
+  const developer = computed(() =>
+    data.value.find((developer) => developer.id === id)
+  );
+  return developer;
+};
+
+const fullName = (developer) => {
+  const name = computed(() => `${developer.firstName} ${developer.lastName}`);
+  return name.value;
+};
+
 export const useDevelopersService = () => {
   return {
     getAll,
@@ -84,5 +113,8 @@ export const useDevelopersService = () => {
     jobTitles,
     skills,
     postDeveloper,
+    getOne,
+    fullName,
+    putDeveloper
   };
 };

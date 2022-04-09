@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useDevelopersService } from "./services/developersService";
 
-export const init = () => {
+
+export const init = async () => {
   const devs = useDevelopersService();
-  devs.getDevelopers();
+  await devs.getDevelopers();
 };
 
 export const getData = async (url) => {

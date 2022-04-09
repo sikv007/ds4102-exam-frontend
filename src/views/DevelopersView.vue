@@ -4,11 +4,20 @@
       <base-modal :show="modal.modalVisible.value" @close="modal.toggleModal"
         ><add-developer></add-developer
       ></base-modal>
-      <div class="col-12 p-4 d-flex justify-content-between align-items-center">
-        <h1 class="fw-bold">Utviklere</h1>
-        <base-button @click="modal.toggleModal">Legg til utvikler</base-button>
+      <div class="row">
+        <div class="col-12 mb-4 d-flex justify-content-between align-items-center">
+          <h1 class="fw-bold">Utviklere</h1>
+          <base-button cta @click="modal.toggleModal"
+            >Legg til utvikler</base-button
+          >
+        </div>
+        <div class="col-12 mb-4">
+          <hr />
+        </div>
       </div>
-      <developers-list></developers-list>
+      <div class="row gap-4">
+        <developers-list></developers-list>
+      </div>
     </div>
   </div>
 </template>

@@ -1,0 +1,8 @@
+@use "variables";
+
+.skill {
+  border-radius: variables.$border-radius;
+  background: rgba($color: variables.$primary, $alpha: 0.1);
+  color: variables.$primary-shade;
+  box-shadow: variables.$shadow-small-2;
+}

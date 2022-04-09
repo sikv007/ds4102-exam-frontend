@@ -1,17 +1,29 @@
 @use "variables";
 
-
 .btn {
   border-radius: variables.$border-radius;
-  background: variables.$primary;
-  border: 0;
+  border: 1px solid transparent;
   color: variables.$background-light-3;
   box-shadow: variables.$shadow-small-2;
   transition: variables.$transition;
-  
+  display: inline-block;
+
+  &--cta {
+    background: variables.$primary;
+    &:hover {
+      background: darken(variables.$primary, 10%);
+    }
+  }
+
+  &--warning {
+    background: variables.$warning;
+    &:hover {
+      background: darken(variables.$warning, 10%);
+    }
+  }
+
   &:hover {
     transform: scale(1.05);
     box-shadow: variables.$shadow-small;
-    background: variables.$primary-shade;
   }
 }

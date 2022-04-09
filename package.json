@@ -39,7 +39,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "vue/script-setup-uses-vars": "error"
+      "vue/script-setup-uses-vars": "error",
+      "no-unused-vars": "off"
     },
     "globals": {
       "defineProps": "readonly",

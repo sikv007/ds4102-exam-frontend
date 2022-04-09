@@ -42,7 +42,7 @@
               class="form-control"
               type="date"
               id="date"
-              v-model="form.date"
+              v-model="form.dateOfBirth"
               placeholder="Fødselsdato"
             />
           </div>
@@ -91,7 +91,7 @@
             </div>
           </div>
         </div>
-        <base-button>{{ button }}</base-button>
+        <base-button cta>{{ button }}</base-button>
       </div>
     </div>
   </form>
@@ -109,6 +109,12 @@ const props = defineProps({
   },
   button: {
     type: String,
+  },
+  currentDeveloper: {
+    type: Object,
+  },
+  id: {
+    type: Number,
   },
 });
 
@@ -130,8 +136,21 @@ const image = new FormData();
 const setImage = (e) => {
   image.delete("file");
   image.append("file", e.target.files[0]);
-  console.log(image.get("file").name);
 };
+
+let developer;
+
+if (props.id) {
+  developer = developers.getOne(props.id);
+  console.log(developer.value);
+  form.firstName = developer.value.firstName;
+  form.lastName = developer.value.lastName;
+  form.dateOfBirth = developer.value.dateOfBirth;
+  form.phone = developer.value.phone;
+  form.skills = developer.value.skills;
+  form.jobTitle = developer.value.jobTitle;
+  form.id = developer.value.id
+}
 
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["submit-form"]);

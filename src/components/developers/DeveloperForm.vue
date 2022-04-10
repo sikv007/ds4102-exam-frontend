@@ -99,7 +99,7 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
-import { useDevelopersService } from "../../services/developersService";
+import { useDeveloperService } from "../../services/developerService";
 import { useModalService } from "../../services/modalService";
 
 // eslint-disable-next-line no-unused-vars
@@ -120,7 +120,7 @@ const props = defineProps({
 
 const modal = useModalService();
 
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 
 const form = reactive({
   firstName: "",

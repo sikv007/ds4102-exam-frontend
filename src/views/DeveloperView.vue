@@ -5,7 +5,7 @@
         :show="modal.formModalVisible.value"
         form
         @close="modal.toggleFormModal"
-        ><add-developer></add-developer
+        ><developer-add></developer-add
       ></base-modal>
       <div class="row gx-4">
         <div
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="row gx-4">
-        <developers-list></developers-list>
+        <developer-list></developer-list>
       </div>
     </div>
   </div>
@@ -29,8 +29,8 @@
 
 <script setup>
 // import { ref } from "vue";
-import DevelopersList from "../components/developers/DevelopersList.vue";
-import AddDeveloper from "../components/developers/AddDeveloper.vue";
+import DeveloperList from "../components/developers/DeveloperList.vue";
+import DeveloperAdd from "../components/developers/DeveloperAdd.vue";
 import { useModalService } from "../services/modalService";
 const modal = useModalService();
 </script>

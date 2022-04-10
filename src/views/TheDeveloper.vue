@@ -5,13 +5,13 @@
       form
       @close="modal.toggleFormModal"
     >
-      <edit-developer :id="developer.id"></edit-developer>
+      <developer-edit :id="developer.id"></developer-edit>
     </base-modal>
     <base-modal
       :show="modal.confirmModalVisible.value"
       confirm
       @close="modal.toggleConfirmModal"
-      ><delete-developer :id="developer.id"></delete-developer
+      ><developer-delete :id="developer.id"></developer-delete
     ></base-modal>
     <div class="profile">
       <div class="container">
@@ -23,9 +23,10 @@
           <div
             class="col-12 col-xs-12 col-md-12 col-lg-6 col-xl-4 d-flex justify-content-center"
           >
-            <figure class="flex-shrink-0">
-              <img :src="developer.image" alt="" />
-            </figure>
+            <base-image
+              :src="developer.image"
+              :alt="developers.fullName(developer)"
+            ></base-image>
           </div>
           <div class="col-12 col-lg-6">
             <div class="row">
@@ -48,16 +49,16 @@
               <a :href="`tel:${developer.phone}`">{{ developer.phone }}</a>
             </div>
             <div class="row">
-              <h5 class="mb-4">Ferdigheter:</h5>
+              <h5 class="mb-3">Ferdigheter:</h5>
               <div class="col d-flex gap-3 mb-5 flex-wrap">
-                <developers-skill
+                <developer-skill
                   v-for="skill in developer.skills"
                   :key="skill"
                   :skill="skill"
-                ></developers-skill>
+                ></developer-skill>
               </div>
             </div>
-            <div class="d-flex gap-4 mb-5">
+            <div class="d-flex gap-3 mb-5">
               <base-button cta @click="modal.toggleFormModal"
                 >Rediger</base-button
               ><base-button warning @click="modal.toggleConfirmModal"
@@ -72,13 +73,13 @@
 </template>
 
 <script setup>
-import DevelopersSkill from "../components/developers/DevelopersSkill.vue";
-import { useDevelopersService } from "../services/developersService";
+import DeveloperSkill from "../components/developers/DeveloperSkill.vue";
+import { useDeveloperService } from "../services/developerService";
 import { useModalService } from "../services/modalService";
-import EditDeveloper from "../components/developers/EditDeveloper.vue";
+import DeveloperEdit from "../components/developers/DeveloperEdit.vue";
 import { computed } from "@vue/runtime-core";
 import DeveloperAvailability from "../components/developers/DeveloperAvailability.vue";
-import DeleteDeveloper from "../components/developers/DeleteDeveloper.vue"
+import DeveloperDelete from "../components/developers/DeveloperDelete.vue";
 
 const props = defineProps({
   id: {
@@ -86,7 +87,7 @@ const props = defineProps({
   },
 });
 
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 const developer = developers.getOne(+props.id);
 
 const modal = useModalService();

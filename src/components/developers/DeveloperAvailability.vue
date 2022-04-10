@@ -14,7 +14,7 @@
 
 <script setup>
 import { computed } from "@vue/runtime-core";
-import { useDevelopersService } from "../../services/developersService";
+import { useDeveloperService } from "../../services/developerService";
 
 const props = defineProps({
   developer: {
@@ -25,7 +25,7 @@ const props = defineProps({
   },
 });
 
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 
 const availabilityClass = computed(() => {
   return props.small ? { "availability--small": true } : { "availability--large": true };

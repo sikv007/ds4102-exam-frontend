@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { useDevelopersService } from "../../services/developersService";
+import { useDeveloperService } from "../../services/developerService";
 import { useModalService } from "../../services/modalService";
 import { useRouter } from "vue-router";
 
@@ -23,7 +23,7 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 const modal = useModalService();
 const submitForm = async () => {
   await developers.deleteDeveloper(props.id);

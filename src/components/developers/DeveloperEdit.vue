@@ -8,13 +8,13 @@
 </template>
 
 <script setup>
-import { useDevelopersService } from "../../services/developersService";
+import { useDeveloperService } from "../../services/developerService";
 import DeveloperForm from "./DeveloperForm.vue";
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
   id: Number
 })
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 
 const submitForm = async (data, image) => {
   await developers.putDeveloper(data, image);

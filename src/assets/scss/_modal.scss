@@ -35,10 +35,9 @@
   left: 0;
 }
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     .modal--form {
       width: 60vw;
       height: auto;
-      // overflow: none;
     }
   }

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
-import DevelopersView from "../views/DevelopersView.vue";
+import DeveloperView from "../views/DeveloperView.vue";
 import TheDeveloper from "../views/TheDeveloper.vue";
 
 const router = createRouter({
@@ -12,7 +12,7 @@ const router = createRouter({
     },
     {
       path: "/utviklere",
-      component: DevelopersView,
+      component: DeveloperView,
     },
     {
       path: "/utviklere/:id",

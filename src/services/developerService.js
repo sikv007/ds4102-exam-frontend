@@ -2,7 +2,6 @@ import axios from "axios";
 import { computed, ref } from "vue";
 import { API_URL, HOST } from "../config";
 import { deleteData, getData, postData, postImage, putData } from "../helpers";
-console.log(HOST);
 const data = ref([]);
 
 const developerUrl = `${API_URL}developer/`;
@@ -125,7 +124,7 @@ const developerAvailable = (developer) => {
   }).value;
 };
 
-export const useDevelopersService = () => {
+export const useDeveloperService = () => {
   return {
     getAll,
     getDevelopers,

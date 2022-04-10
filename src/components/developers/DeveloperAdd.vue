@@ -7,9 +7,9 @@
 </template>
 
 <script setup>
-import { useDevelopersService } from "../../services/developersService";
+import { useDeveloperService } from "../../services/developerService";
 import DeveloperForm from "./DeveloperForm.vue";
-const developers = useDevelopersService();
+const developers = useDeveloperService();
 
 const submitForm = async (data, image) => {
   await developers.postDeveloper(data, image);

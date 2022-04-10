@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useDevelopersService } from "./services/developersService";
+import { useDeveloperService } from "./services/developerService";
 
 export const init = async () => {
-  const devs = useDevelopersService();
-  await devs.getDevelopers();
+  const developers = useDeveloperService();
+  await developers.getDevelopers();
 };
 
 export const getData = async (url) => {

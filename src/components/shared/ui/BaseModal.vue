@@ -3,9 +3,17 @@
     <transition name="overlay" mode="out-in" @click="close">
       <div v-if="show" class="modal-overlay"></div>
     </transition>
-    <transition name="modal" mode="out-in" @after-enter="addModalClass" @before-leave="removeModalClass">
-      <div v-if="show" class="modal" :class="modalClass">
-         <slot></slot>
+    <transition
+      name="modal"
+      mode="out-in"
+      @after-enter="addModalClass"
+      @before-leave="removeModalClass"
+    >
+      <div v-if="show && form" class="modal modal--form" :class="modalClass">
+        <slot></slot>
+      </div>
+      <div v-else-if="show && confirm" class="modal modal--confirm" :class="modalClass">
+        <slot></slot>
       </div>
     </transition>
   </teleport>
@@ -20,6 +28,12 @@ const props = defineProps({
   show: {
     type: Boolean,
   },
+  form: {
+    type: Boolean
+  },
+  confirm: {
+    type: Boolean
+  }
 });
 
 const opened = ref(false);
@@ -30,7 +44,7 @@ const addModalClass = () => {
 
 const removeModalClass = () => {
   opened.value = false;
-}
+};
 
 const modalClass = computed(() =>
   opened.value ? { "modal-open": true } : { "modal-open": false }

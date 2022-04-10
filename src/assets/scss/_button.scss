@@ -2,17 +2,23 @@
 
 .btn {
   border-radius: variables.$border-radius;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   color: variables.$background-light-3;
   box-shadow: variables.$shadow-small-2;
   transition: variables.$transition;
   display: inline-block;
-
+  
   &--cta {
     background: variables.$primary;
     &:hover {
       background: darken(variables.$primary, 10%);
     }
+  }
+  
+  &--outline {
+    background: none;
+    border: 2px solid variables.$primary;
+    color: variables.$primary;
   }
 
   &--warning {

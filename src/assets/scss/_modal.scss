@@ -1,9 +1,11 @@
 @use "variables";
 
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+
 .modal {
-  width: 60vw;
-  // max-height: 80vh;
-  // overflow: scroll;
+  overflow: scroll;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -12,6 +14,12 @@
   box-shadow: variables.$shadow-large;
   border-radius: variables.$border-radius;
 }
+
+.modal--form {
+  width: 100vw;
+  height: 100vh;
+}
+
 
 .modal-open {
   transform: translate(-50%, -50%) scale(1);
@@ -26,3 +34,11 @@
   top: 0;
   left: 0;
 }
+
+  @include media-breakpoint-up(md) {
+    .modal--form {
+      width: 60vw;
+      height: auto;
+      // overflow: none;
+    }
+  }

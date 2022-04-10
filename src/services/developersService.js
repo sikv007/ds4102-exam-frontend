@@ -1,14 +1,16 @@
 import axios from "axios";
 import { computed, ref } from "vue";
 import { API_URL, HOST } from "../config";
+import { deleteData, getData, postData, postImage, putData } from "../helpers";
 console.log(HOST);
 const data = ref([]);
 
+const developerUrl = `${API_URL}developer/`;
+
 const getDevelopers = async () => {
-  const res = await axios.get(`${API_URL}developer`);
+  const res = await getData(developerUrl);
   const devs = [];
-  console.log(res);
-  res.data.forEach((dev) => {
+  res.forEach((dev) => {
     const developer = {
       id: dev.id,
       firstName: dev.firstName,
@@ -25,13 +27,8 @@ const getDevelopers = async () => {
   data.value = devs;
 };
 
-const postImage = async (image) => {
-  await axios({
-    method: "POST",
-    url: `${API_URL}developer/PostImage`,
-    data: image,
-    config: { header: { "Content-Type": "multipart/form-data" } },
-  });
+const postDeveloperImage = async (image) => {
+  await postImage(developerUrl, image);
 };
 
 const postDeveloper = async (developer, image) => {
@@ -44,9 +41,8 @@ const postDeveloper = async (developer, image) => {
     dateOfBirth: developer.dateOfBirth,
     image: image.get("file").name,
   };
-  console.log(newDeveloper);
-  await axios.post(`${API_URL}developer`, newDeveloper);
-  await postImage(image);
+  await postData(developerUrl, newDeveloper);
+  await postDeveloperImage(image);
   await getDevelopers();
 };
 
@@ -59,10 +55,22 @@ const putDeveloper = async (developer, image) => {
     jobTitle: developer.jobTitle,
     skills: developer.skills.join(","),
     dateOfBirth: developer.dateOfBirth,
-    image: "image.jpg",
   };
-  await axios.put(`${API_URL}developer`, editedDeveloper);
+  const currentImage = getOne(developer.id).value.image;
+  if (!image.get("file")) {
+    editedDeveloper.image = currentImage.slice(
+      currentImage.lastIndexOf("/") + 1
+    );
+  } else {
+    editedDeveloper.image = image.get("file").name;
+  }
+  await putData(developerUrl, editedDeveloper);
+  if (image.get("file")) await postDeveloperImage(image);
   await getDevelopers();
+};
+
+const deleteDeveloper = async (id) => {
+  await deleteData(`${developerUrl}${id}`);
 };
 
 const jobTitles = [
@@ -106,6 +114,17 @@ const fullName = (developer) => {
   return name.value;
 };
 
+const developerAvailable = (developer) => {
+  return computed(() => {
+    return !developer.assignment
+      ? {
+          class: { "availability--available": true },
+          text: "Ledig for oppdrag",
+        }
+      : { class: { "availability--unavailable": true }, text: "På oppdrag" };
+  }).value;
+};
+
 export const useDevelopersService = () => {
   return {
     getAll,
@@ -115,6 +134,8 @@ export const useDevelopersService = () => {
     postDeveloper,
     getOne,
     fullName,
-    putDeveloper
+    putDeveloper,
+    developerAvailable,
+    deleteDeveloper,
   };
 };

@@ -1,10 +1,14 @@
 <template>
-  <router-link class="col-12 col-lg-6 col-xl-4" :to="`/utviklere/${developer.id}`">
+  <router-link
+    class="col-12 col-lg-6 col-xl-4 mb-4"
+    :to="`/utviklere/${developer.id}`"
+  >
     <article class="card p-4 d-flex gap-4 align-items-center">
       <figure class="flex-shrink-0">
         <img :src="developer.image" :alt="developers.fullName(developer)" />
       </figure>
       <div>
+        <developer-availability :developer="developer" small></developer-availability>
         <h5 class="fw-bold mb-0">{{ developers.fullName(developer) }}</h5>
         <p>{{ developer.jobTitle }}</p>
         <p class="h6">Mer info &rarr;</p>
@@ -15,6 +19,7 @@
 
 <script setup>
 import { useDevelopersService } from "../../services/developersService";
+import DeveloperAvailability from "./DeveloperAvailability.vue"
 
 const props = defineProps({
   developer: {

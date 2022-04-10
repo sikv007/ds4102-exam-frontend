@@ -18,6 +18,16 @@
                 >Utviklere</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link to="/oppdrag" class="nav-link px-0" @click="close"
+                >Oppdrag</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link to="/kunder" class="nav-link px-0" @click="close"
+                >Kunder</router-link
+              >
+            </li>
           </ul>
           <hr />
           <button @click="close">Close</button>

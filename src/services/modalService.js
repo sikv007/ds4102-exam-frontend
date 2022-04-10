@@ -1,14 +1,21 @@
 import { ref } from "vue";
 
-const modalVisible = ref(false);
+const formModalVisible = ref(false);
+const confirmModalVisible = ref(false);
 
-const toggleModal = () => {
-  modalVisible.value = !modalVisible.value;
+const toggleFormModal = () => {
+  formModalVisible.value = !formModalVisible.value;
+};
+
+const toggleConfirmModal = () => {
+  confirmModalVisible.value = !confirmModalVisible.value;
 };
 
 export const useModalService = () => {
   return {
-    modalVisible,
-    toggleModal,
+    formModalVisible,
+    toggleFormModal,
+    confirmModalVisible,
+    toggleConfirmModal
   };
 };

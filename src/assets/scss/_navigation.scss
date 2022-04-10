@@ -1,8 +1,11 @@
 @use "variables";
 
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
 
 nav {
-  width: 50vw;
+  width: 90vw;
   height: 100vh;
   background: variables.$background-light-3;
   position: fixed;
@@ -21,3 +24,9 @@ nav {
   top: 0;
   left: 0;
 }
+
+  @include media-breakpoint-up(md) {
+    nav {
+      width: 50vw;
+    }
+  }

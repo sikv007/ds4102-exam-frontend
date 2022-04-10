@@ -149,7 +149,7 @@ if (props.id) {
   form.phone = developer.value.phone;
   form.skills = developer.value.skills;
   form.jobTitle = developer.value.jobTitle;
-  form.id = developer.value.id
+  form.id = developer.value.id;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -158,6 +158,6 @@ const emit = defineEmits(["submit-form"]);
 const submitForm = () => {
   if (form.firstName === "") return;
   emit("submit-form", form, image);
-  modal.toggleModal();
+  modal.toggleFormModal();
 };
 </script>

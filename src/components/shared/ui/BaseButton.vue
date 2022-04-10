@@ -1,5 +1,5 @@
 <template>
-  <button class="btn py-3 px-5 fw-bold h6" :class="btnClass">
+  <button class="btn py-2 px-4 fw-bold" :class="btnClass">
     <slot></slot>
   </button>
 </template>
@@ -15,12 +15,16 @@ const props = defineProps({
   warning: {
     type: Boolean,
   },
+  outline: {
+    type: Boolean
+  }
 });
 
 const btnClass = computed(() => {
   return {
     "btn--cta": props.cta,
     "btn--warning": props.warning,
+    "btn--outline": props.outline,
   };
 });
 </script>

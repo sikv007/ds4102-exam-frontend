@@ -5,8 +5,7 @@
   border-radius: variables.$border-radius;
   transition: variables.$transition;
   box-shadow: variables.$shadow-small-2;
-
-
+  position: relative;
 
   .h6 {
     color: variables.$primary;
@@ -17,7 +16,10 @@
     width: 8rem;
     height: 8rem;
     border-radius: 50%;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     img {
       transition: variables.$transition;
       width: 100%;
@@ -25,8 +27,8 @@
   }
 
   &:hover {
-    transform: scale(1.1);
-    color: variables.$primary;
+    transform: scale(1.05);
+    // color: variables.$primary;
     box-shadow: variables.$shadow-small;
     figure {
       img {

@@ -20,7 +20,7 @@ const getDevelopers = async () => {
       email: dev.email,
       skills: dev.skills.split(","),
       dateOfBirth: dev.dateOfBirth,
-      image: `${HOST}src/img/developers/${dev.image}`,
+      image: `${HOST}src/img/developer/${dev.image}`,
     };
     devs.push(developer);
   });

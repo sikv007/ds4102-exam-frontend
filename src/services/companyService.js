@@ -14,14 +14,16 @@ const getCompanies = async () => {
     const comp = {
       id: company.id,
       name: company.name,
-      assignments: company.assignments.split(","),
+      assignments: company.assignments?.split(","),
       contactName: company.contactName,
       contactEmail: company.contactEmail,
       organizationNumber: company.organizationNumber,
-      image: company.image,
+      image: `${HOST}src/img/company/${company.image}`,
     };
+
     companies.push(comp);
   });
+
   data.value = companies;
 };
 
@@ -33,7 +35,6 @@ const postCompany = async (company, image) => {
   const newCompany = {
     name: company.name,
     address: company.address,
-    assignments: company.assignments.join(","),
     contactName: company.contactName,
     contactEmail: company.contactEmail,
     image: image.get("file").name,

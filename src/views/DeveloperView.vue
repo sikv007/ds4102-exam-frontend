@@ -30,8 +30,8 @@
 
 <script setup>
 // import { ref } from "vue";
-import DeveloperList from "../components/developers/DeveloperList.vue";
-import DeveloperAdd from "../components/developers/DeveloperAdd.vue";
+import DeveloperList from "../components/developer/DeveloperList.vue";
+import DeveloperAdd from "../components/developer/DeveloperAdd.vue";
 import { useModalService } from "../services/modalService";
 import { useDeveloperService } from "../services/developerService";
 const modal = useModalService();

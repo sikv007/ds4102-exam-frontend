@@ -15,5 +15,8 @@
     transform: scale(1.05);
     // color: variables.$primary;
     box-shadow: variables.$shadow-small;
+    img {
+      transform: scale(1.2);
+    }
   }
 }

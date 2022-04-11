@@ -11,17 +11,63 @@ const getCompanies = async () => {
   const res = await getData(companyUrl);
   const companies = [];
   res.forEach((company) => {
-    const developer = {
+    const comp = {
       id: company.id,
       name: company.name,
       assignments: company.assignments.split(","),
-      logo: company.logo,
       contactName: company.contactName,
       contactEmail: company.contactEmail,
+      organizationNumber: company.organizationNumber,
+      image: company.image,
     };
-    companies.push(developer);
+    companies.push(comp);
   });
   data.value = companies;
+};
+
+const postCompanyImage = async (image) => {
+  await postImage(companyUrl, image);
+};
+
+const postCompany = async (company, image) => {
+  const newCompany = {
+    name: company.name,
+    address: company.address,
+    assignments: company.assignments.join(","),
+    contactName: company.contactName,
+    contactEmail: company.contactEmail,
+    image: image.get("file").name,
+    organizationNumber: company.organizationNumber,
+  };
+  await postData(companyUrl, newCompany);
+  await postCompanyImage(image);
+  await getCompanies();
+};
+
+const putCompany = async (company, image) => {
+  const editedCompany = {
+    id: company.id,
+    name: company.name,
+    assignments: company.assignments.join(","),
+    contactName: company.contactName,
+    contactEmail: company.contactEmail,
+    organizationNumber: company.organizationNumber,
+    image: image.get("file").name,
+  };
+
+  const currentImage = getOne(company.id).value.image;
+  if (!image.get("file")) {
+    editedCompany.image = currentImage.slice(currentImage.lastIndexOf("/") + 1);
+  } else {
+    editedCompany.image = image.get("file").name;
+  }
+  await putData(companyUrl, editedCompany);
+  if (image.get("file")) await postCompanyImage(image);
+  await getCompanies();
+};
+
+const deleteCompany = async (id) => {
+  await deleteData(`${companyUrl}${id}`);
 };
 
 const getAll = computed(() => data.value);
@@ -33,10 +79,13 @@ const getOne = (id) => {
   return company;
 };
 
-const useCompanyService = () => {
+export const useCompanyService = () => {
   return {
     getAll,
     getCompanies,
     getOne,
+    postCompany,
+    deleteCompany,
+    putCompany,
   };
 };

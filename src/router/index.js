@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
 import DeveloperView from "../views/DeveloperView.vue";
 import TheDeveloper from "../views/TheDeveloper.vue";
+import CompanyView from "../views/CompanyView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +19,10 @@ const router = createRouter({
       path: "/utviklere/:id",
       component: TheDeveloper,
       props: true,
+    },
+    {
+      path: "/kunder",
+      component: CompanyView,
     },
   ],
 });

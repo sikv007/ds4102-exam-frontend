@@ -15,6 +15,7 @@ const getDevelopers = async () => {
       firstName: dev.firstName,
       lastName: dev.lastName,
       jobTitle: dev.jobTitle,
+      assignment: dev.assignment,
       phone: dev.phone,
       email: dev.email,
       skills: dev.skills.split(","),

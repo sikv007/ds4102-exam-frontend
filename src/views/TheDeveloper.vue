@@ -73,13 +73,13 @@
 </template>
 
 <script setup>
-import DeveloperSkill from "../components/developers/DeveloperSkill.vue";
+import DeveloperSkill from "../components/developer/DeveloperSkill.vue";
 import { useDeveloperService } from "../services/developerService";
 import { useModalService } from "../services/modalService";
-import DeveloperEdit from "../components/developers/DeveloperEdit.vue";
+import DeveloperEdit from "../components/developer/DeveloperEdit.vue";
 import { computed } from "@vue/runtime-core";
-import DeveloperAvailability from "../components/developers/DeveloperAvailability.vue";
-import DeveloperDelete from "../components/developers/DeveloperDelete.vue";
+import DeveloperAvailability from "../components/developer/DeveloperAvailability.vue";
+import DeveloperDelete from "../components/developer/DeveloperDelete.vue";
 
 const props = defineProps({
   id: {

@@ -21,7 +21,8 @@
         </div>
       </div>
       <div class="row gx-4">
-        <developer-list></developer-list>
+        <base-empty v-if="developers.getAll.value.length <= 0"></base-empty>
+        <developer-list v-else></developer-list>
       </div>
     </div>
   </div>
@@ -32,5 +33,7 @@
 import DeveloperList from "../components/developers/DeveloperList.vue";
 import DeveloperAdd from "../components/developers/DeveloperAdd.vue";
 import { useModalService } from "../services/modalService";
+import { useDeveloperService } from "../services/developerService";
 const modal = useModalService();
+const developers = useDeveloperService();
 </script>

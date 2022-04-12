@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="row gx-4">
-        <base-empty v-if="developers.getAll.value.length <= 0"></base-empty>
+        <base-empty v-if="developers.getAll.value.length === 0" title="Fant ingen utviklere..."></base-empty>
         <developer-list v-else></developer-list>
       </div>
     </div>

@@ -2,7 +2,9 @@
   <form @submit.prevent="submitForm" class="p-5">
     <div class="container">
       <div class="row">
-        <h2 class="fw-bold mb-4">{{ title }}</h2>
+        <div class="col">
+          <h2 class="fw-bold mb-4">{{ title }}</h2>
+        </div>
         <div class="row">
           <div class="col mb-4">
             <label for="firstName" class="form-label">Fornavn</label>
@@ -33,7 +35,7 @@
               type="number"
               id="phone"
               v-model="form.phone"
-              placeholder="48003000"
+              placeholder="98765432"
             />
           </div>
           <div class="col">
@@ -91,7 +93,22 @@
             </div>
           </div>
         </div>
-        <base-button cta>{{ button }}</base-button>
+        <div class="row">
+          <div class="col">
+            <div
+              v-if="form.error !== 'pending'"
+              class="alert alert-danger"
+              role="alert"
+            >
+              {{ form.message }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <base-button cta>{{ button }}</base-button>
+          </div>
+        </div>
       </div>
     </div>
   </form>
@@ -129,6 +146,8 @@ const form = reactive({
   dateOfBirth: null,
   jobTitle: developers.jobTitles[0],
   skills: [],
+  error: "pending",
+  message: null,
 });
 
 const image = new FormData();
@@ -151,6 +170,7 @@ if (props.id) {
   form.jobTitle = developer.value.jobTitle;
   form.id = developer.value.id;
 }
+
 
 // eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["submit-form"]);

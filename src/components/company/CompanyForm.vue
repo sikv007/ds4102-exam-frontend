@@ -49,12 +49,14 @@
         </div>
         <div class="row">
           <div class="col mb-4">
-            <label for="organizationNumber" class="form-label">Organisasjonsnummer</label>
+            <label for="organizationNumber" class="form-label"
+              >Organisasjonsnummer</label
+            >
             <input
               class="form-control"
               type="number"
               id="organizationNumber"
-              v-model="form.organizationNumber"
+              v-model.number="form.organizationNumber"
               placeholder="48003000"
             />
           </div>
@@ -78,7 +80,7 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
-import { useDeveloperService } from "../../services/developerService";
+import { useCompanyService } from "../../services/companyService";
 import { useModalService } from "../../services/modalService";
 
 // eslint-disable-next-line no-unused-vars
@@ -99,10 +101,11 @@ const props = defineProps({
 
 const modal = useModalService();
 
-const developers = useDeveloperService();
+const companies = useCompanyService();
 
 const form = reactive({
   name: "",
+  address: "",
   contactName: "",
   contactEmail: "",
   organizationNumber: null,
@@ -118,10 +121,13 @@ const setImage = (e) => {
 let company;
 
 if (props.id) {
-  company = company.getOne(props.id);
-  form.name = company.name;
-  form.contactName = company.contactName;
-  form.contactEmail = company.contactEmail;
+  company = companies.getOne(props.id);
+  console.log(company.value);
+  form.name = company.value.name;
+  form.address = company.value.address;
+  form.contactName = company.value.contactName;
+  form.contactEmail = company.value.contactEmail;
+  form.organizationNumber = company.value.organizationNumber;
   form.id = company.value.id;
 }
 
@@ -129,7 +135,7 @@ if (props.id) {
 const emit = defineEmits(["submit-form"]);
 
 const submitForm = () => {
-  if (form.firstName === "") return;
+  if (form.name === "") return;
   emit("submit-form", form, image);
   modal.toggleFormModal();
 };

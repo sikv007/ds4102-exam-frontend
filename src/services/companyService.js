@@ -14,7 +14,8 @@ const getCompanies = async () => {
     const comp = {
       id: company.id,
       name: company.name,
-      assignments: company.assignments?.split(","),
+      address: company.address,
+      assignments: company.assignments?.split(",") || null,
       contactName: company.contactName,
       contactEmail: company.contactEmail,
       organizationNumber: company.organizationNumber,
@@ -49,11 +50,11 @@ const putCompany = async (company, image) => {
   const editedCompany = {
     id: company.id,
     name: company.name,
-    assignments: company.assignments.join(","),
+    address: company.address,
+    assignments: company.assignments?.join(",") || null,
     contactName: company.contactName,
     contactEmail: company.contactEmail,
     organizationNumber: company.organizationNumber,
-    image: image.get("file").name,
   };
 
   const currentImage = getOne(company.id).value.image;

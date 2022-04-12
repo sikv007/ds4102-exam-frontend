@@ -18,7 +18,7 @@ const getDevelopers = async () => {
       assignment: dev.assignment,
       phone: dev.phone,
       email: dev.email,
-      skills: dev.skills.split(","),
+      skills: dev.skills?.split(","),
       dateOfBirth: dev.dateOfBirth,
       image: `${HOST}src/img/developer/${dev.image}`,
     };

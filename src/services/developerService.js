@@ -2,6 +2,7 @@ import axios from "axios";
 import { computed, ref } from "vue";
 import { API_URL, HOST } from "../config";
 import { deleteData, getData, postData, postImage, putData } from "../helpers";
+
 const data = ref([]);
 
 const developerUrl = `${API_URL}developer/`;
@@ -18,7 +19,7 @@ const getDevelopers = async () => {
       assignment: dev.assignment,
       phone: dev.phone,
       email: dev.email,
-      skills: dev.skills?.split(","),
+      skills: dev.skills?.split(",") || null,
       dateOfBirth: dev.dateOfBirth,
       image: `${HOST}src/img/developer/${dev.image}`,
     };
@@ -102,17 +103,30 @@ const skills = [
 
 const getAll = computed(() => data.value);
 
-const getOne = (id) => {
-  const developer = computed(() =>
-    data.value.find((developer) => developer.id === id)
-  );
-  return developer;
+const getOne = (id) =>
+  computed(() => data.value.find((developer) => developer.id === id));
+
+const fullName = (developer) =>
+  computed(() => `${developer.firstName} ${developer.lastName}`);
+
+const getAvailableDevelopers = computed(() =>
+  data.value.filter((developer) => !developer.assignment)
+);
+
+const addAssignmentToDeveloper = async (id, assignment) => {
+  const developer = await getData(`${developerUrl}${id}`);
+  developer.assignment = assignment.id;
+  await putData(`${developerUrl}`, developer);
+  await getDevelopers();
 };
 
-const fullName = (developer) => {
-  const name = computed(() => `${developer.firstName} ${developer.lastName}`);
-  return name.value;
+const removeAssignmentFromDeveloper = async (id) => {
+  const developer = await getData(`${developerUrl}${id}`);
+  developer.assignment = null;
+  await putData(`${developerUrl}`, developer);
+  await getDevelopers();
 };
+
 
 const developerAvailable = (developer) => {
   return computed(() => {
@@ -124,6 +138,11 @@ const developerAvailable = (developer) => {
       : { class: { "availability--unavailable": true }, text: "På oppdrag" };
   }).value;
 };
+
+const getDevelopersFromAssignment = (assignment) =>
+  computed(() =>
+    data.value.filter((developer) => developer.assignment === assignment)
+  );
 
 export const useDeveloperService = () => {
   return {
@@ -137,5 +156,9 @@ export const useDeveloperService = () => {
     putDeveloper,
     developerAvailable,
     deleteDeveloper,
+    getAvailableDevelopers,
+    addAssignmentToDeveloper,
+    getDevelopersFromAssignment,
+    removeAssignmentFromDeveloper,
   };
 };

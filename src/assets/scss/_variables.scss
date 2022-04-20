@@ -1,18 +1,18 @@
 $background-light-1: #f5f5f5;
-$background-light-2: #e5e5e5;
+$background-light-2: darken($background-light-1, 4%);
 $background-light-3: #fafafa;
 
 $background-dark-1: #262626;
 $background-dark-2: #404040;
 $background-dark-3: #171717;
 
-$primary: #5158BB;
-$primary-shade: #181A38;
-$primary-tint: #DCDEF1;
+$primary: #5158bb;
+$primary-shade: #181a38;
+$primary-tint: #dcdef1;
 $primary-gradient: linear-gradient(#414696, $primary);
 
-$warning: #ef4556; 
-$success: #5EFC8D; 
+$warning: #ef4556;
+$success: #5efc8d;
 
 $border-radius: 6px;
 $border-radius-large: 16px;
@@ -21,4 +21,5 @@ $shadow-large: 0px 0px 40px 0 rgba(0, 0, 0, 0.05);
 $shadow-small: 0px 0px 20px 0 rgba(0, 0, 0, 0.05);
 $shadow-small-2: 0px 4px 5px 0 rgba(0, 0, 0, 0.05);
 
-$transition: all 0.5s ease;
+$transition: all 0.2s ease;
+$transition-bezier: all 0.6s cubic-bezier(1, 0.2, 0.1, 1);

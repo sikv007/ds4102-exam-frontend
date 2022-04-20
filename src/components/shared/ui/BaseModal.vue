@@ -1,9 +1,9 @@
 <template>
-  <teleport to="body">
-    <transition name="overlay" mode="out-in" @click="close">
+  <Teleport to="body">
+    <Transition name="overlay" mode="out-in" @click="close">
       <div v-if="show" class="modal-overlay"></div>
-    </transition>
-    <transition
+    </Transition>
+    <Transition
       name="modal"
       mode="out-in"
       @after-enter="addModalClass"
@@ -15,8 +15,8 @@
       <div v-else-if="show && confirm" class="modal modal--confirm" :class="modalClass">
         <slot></slot>
       </div>
-    </transition>
-  </teleport>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>

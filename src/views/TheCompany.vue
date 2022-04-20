@@ -1,32 +1,28 @@
 <template>
   <div v-if="company" class="container pt-2 pb-5">
-    <base-modal
+    <BaseModal
       :show="modal.formModalVisible.value"
       form
       @close="modal.toggleFormModal"
     >
-      <company-edit :id="company.id"></company-edit>
-    </base-modal>
-    <base-modal
+      <CompanyEdit :id="company.id" />
+    </BaseModal>
+    <BaseModal
       :show="modal.confirmModalVisible.value"
       confirm
       @close="modal.toggleConfirmModal"
-      ><company-delete :id="company.id"></company-delete
-    ></base-modal>
+      ><CompanyDelete :id="company.id" />
+    </BaseModal>
     <div class="profile">
       <div class="container">
         <div class="row mb-4">
-          <base-back to="/kunder" title="Kunder"></base-back>
-          <hr />
+          <BaseBack to="/kunder" title="Kunder" />
         </div>
         <div class="row p-4">
           <div
             class="col-12 col-xs-12 col-md-12 col-lg-6 col-xl-4 d-flex justify-content-center"
           >
-            <base-image
-              :src="company.image"
-              :alt="company.name"
-            ></base-image>
+            <BaseImage :src="company.image" :alt="company.name" />
           </div>
           <div class="col-12 col-lg-6">
             <h1 class="fw-bold mb-2 h2">
@@ -34,11 +30,12 @@
             </h1>
 
             <div class="d-flex gap-3 mb-5">
-              <base-button cta @click="modal.toggleFormModal"
-                >Rediger</base-button
-              ><base-button warning @click="modal.toggleConfirmModal"
-                >Slett</base-button
-              >
+              <BaeButton cta @click="modal.toggleFormModal" title="Rediger" />
+              <BaseButton
+                warning
+                @click="modal.toggleConfirmModal"
+                title="Slett"
+              />
             </div>
           </div>
         </div>
@@ -48,10 +45,15 @@
 </template>
 
 <script setup>
+import { defineAsyncComponent } from "@vue/runtime-core";
 import { useCompanyService } from "../services/companyService";
 import { useModalService } from "../services/modalService";
-import CompanyEdit from "../components/company/CompanyEdit.vue"
-import CompanyDelete from "../components/company/CompanyDelete.vue"
+const CompanyEdit = defineAsyncComponent(() =>
+  import("../components/company/CompanyEdit.vue")
+);
+const CompanyDelete = defineAsyncComponent(() =>
+  import("../components/company/CompanyDelete.vue")
+);
 
 const props = defineProps({
   id: {
@@ -61,6 +63,7 @@ const props = defineProps({
 
 const companies = useCompanyService();
 const company = companies.getOne(+props.id);
+console.log(company);
 
 const modal = useModalService();
 </script>

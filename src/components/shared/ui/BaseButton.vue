@@ -1,6 +1,6 @@
 <template>
   <button class="btn py-2 px-4 fw-bold" :class="btnClass">
-    <slot></slot>
+    {{ title }} &rarr;
   </button>
 </template>
 
@@ -16,8 +16,14 @@ const props = defineProps({
     type: Boolean,
   },
   outline: {
-    type: Boolean
-  }
+    type: Boolean,
+  },
+  small: {
+    type: Boolean,
+  },
+  title: {
+    type: String,
+  },
 });
 
 const btnClass = computed(() => {
@@ -25,6 +31,7 @@ const btnClass = computed(() => {
     "btn--cta": props.cta,
     "btn--warning": props.warning,
     "btn--outline": props.outline,
+    "btn--small": props.small,
   };
 });
 </script>

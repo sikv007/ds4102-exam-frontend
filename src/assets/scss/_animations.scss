@@ -1,3 +1,5 @@
+@use "variables";
+
 .nav {
   &-enter-from,
   &-leave-to {
@@ -9,7 +11,7 @@
   }
   &-enter-active,
   &-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
+    transition: variables.$transition-bezier;
   }
 }
 
@@ -26,7 +28,28 @@
   }
   &-enter-active,
   &-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
+    transition: variables.$transition-bezier;
+  }
+}
+
+.list {
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(20%) !important;
+    opacity: 0;
+  }
+  &-enter-to,
+  &-leave-from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  &-enter-active,
+  &-leave-active,
+  &-move {
+    transition: variables.$transition-bezier;
+  }
+  &-leave-active {
+    position: absolute;
   }
 }
 
@@ -43,7 +66,7 @@
   }
   &-enter-active,
   &-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.2, 0.1, 1);
+    transition: variables.$transition-bezier;
   }
 }
 
@@ -57,5 +80,5 @@
 }
 .overlay-enter-active,
 .overlay-leave-active {
-  transition: all 0.8s ease-in-out;
+  transition: variables.$transition;
 }

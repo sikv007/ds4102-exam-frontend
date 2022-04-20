@@ -1,20 +1,44 @@
 <template>
-  <base-card :to="`/utviklere/${developer.id}`">
-    <base-image
+  <BaseCard v-if="card" :to="`/utviklere/${developer.id}`">
+    <BaseImage
       :src="developer.image"
-      :alt="developers.fullName(developer)"
+      :alt="developers.fullName(developer).value"
       small
-    ></base-image>
+    />
     <div>
-      <developer-availability
-        :developer="developer"
-        small
-      ></developer-availability>
-      <h5 class="fw-bold mb-0">{{ developers.fullName(developer) }}</h5>
+      <DeveloperAvailability :developer="developer" small />
+      <h5 class="fw-bold mb-0">{{ developers.fullName(developer).value }}</h5>
       <p>{{ developer.jobTitle }}</p>
       <p class="h6">Mer info &rarr;</p>
     </div>
-  </base-card>
+  </BaseCard>
+  <BaseList v-else>
+    <router-link
+      :to="`/utviklere/${developer.id}`"
+      class="d-flex align-items-center gap-4"
+    >
+      <BaseImage
+        class="mb-0"
+        :src="developer.image"
+        :alt="developers.fullName(developer).value"
+        preview
+      />
+      <div>
+        <h6 class="fw-bold mb-0 d-flex align-items-center gap-2">
+          {{ developers.fullName(developer).value }}
+          <DeveloperAvailability preview :developer="developer" />
+        </h6>
+        <p class="mb-0">{{ developer.jobTitle }}</p>
+      </div>
+    </router-link>
+    <BaseButton
+      class="ms-auto"
+      outline
+      small
+      @click="emitEvent"
+      :title="buttonText"
+    />
+  </BaseList>
 </template>
 
 <script setup>
@@ -25,15 +49,22 @@ const props = defineProps({
   developer: {
     type: Object,
   },
+  card: {
+    type: Boolean,
+  },
+  event: {
+    type: Function,
+  },
+  buttonText: {
+    type: String,
+  },
 });
+
+const emit = defineEmits(["event"]);
+
+const emitEvent = () => {
+  emit("event", props.developer.id);
+};
 
 const developers = useDeveloperService();
 </script>
-
-<style scoped>
-a {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-}
-</style>

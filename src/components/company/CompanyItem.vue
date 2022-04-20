@@ -23,11 +23,3 @@ const props = defineProps({
 
 const companies = useCompanyService();
 </script>
-
-<style scoped>
-a {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-}
-</style>

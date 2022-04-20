@@ -106,7 +106,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <base-button cta>{{ button }}</base-button>
+            <BaseButton cta :title="button"/>
           </div>
         </div>
       </div>

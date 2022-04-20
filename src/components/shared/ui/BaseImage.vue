@@ -17,11 +17,14 @@ const props = defineProps({
   small: {
     type: Boolean,
   },
+  preview: {
+    type: Boolean,
+  },
 });
 
 const imageClass = computed(() => {
-  return props.small
-    ? { "img-rounded--small": true }
-    : { "img-rounded--large": true };
+  if (props.small) return { "img-rounded--small": true };
+  if (props.preview) return { "img-rounded--preview": true };
+  else return { "img-rounded--large": true };
 });
 </script>

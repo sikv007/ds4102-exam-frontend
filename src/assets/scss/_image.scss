@@ -7,9 +7,10 @@
   overflow: hidden;
   border-radius: 50%;
   background: variables.$background-light-3;
-
   img {
     height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
   &--small {
@@ -21,8 +22,17 @@
     }
   }
 
+    &--preview {
+    width: 3rem;
+    height: 3rem;
+
+    img {
+      transition: variables.$transition;
+    }
+  }
+
   &--large {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
   }
 }

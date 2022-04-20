@@ -7,7 +7,7 @@
           <span></span>
           <span></span>
         </button>
-        <base-logo></base-logo>
+        <BaseLogo />
         <button @click="darkmode.setDarkMode">darkmode</button>
       </div>
     </div>

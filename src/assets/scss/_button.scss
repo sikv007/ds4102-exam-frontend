@@ -28,6 +28,10 @@
     }
   }
 
+  &--small {
+    font-size: 0.8rem;
+  }
+
   &:hover {
     transform: scale(1.05);
     box-shadow: variables.$shadow-small;

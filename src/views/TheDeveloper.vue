@@ -1,43 +1,41 @@
 <template>
   <div v-if="developer" class="container pt-2 pb-5">
-    <base-modal
+    <BaseModal
       :show="modal.formModalVisible.value"
       form
       @close="modal.toggleFormModal"
     >
-      <developer-edit :id="developer.id"></developer-edit>
-    </base-modal>
-    <base-modal
+      <DeveloperEdit :id="developer.id" />
+    </BaseModal>
+    <BaseModal
       :show="modal.confirmModalVisible.value"
       confirm
       @close="modal.toggleConfirmModal"
-      ><developer-delete :id="developer.id"></developer-delete
-    ></base-modal>
+    >
+      <DeveloperDelete :id="developer.id" />
+    </BaseModal>
     <div class="profile">
       <div class="container">
         <div class="row mb-4">
-          <base-back to="/utviklere" title="Utviklere"></base-back>
-          <hr />
+          <BaseBack to="/utviklere" title="Utviklere" />
         </div>
         <div class="row p-4">
           <div
             class="col-12 col-xs-12 col-md-12 col-lg-6 col-xl-4 d-flex justify-content-center"
           >
-            <base-image
+            <BaseImage
               :src="developer.image"
-              :alt="developers.fullName(developer)"
-            ></base-image>
+              :alt="developers.fullName(developer).value"
+            />
           </div>
           <div class="col-12 col-lg-6">
             <div class="row">
               <div class="col d-flex mb-4">
-                <developer-availability
-                  :developer="developer"
-                ></developer-availability>
+                <DeveloperAvailability :developer="developer" />
               </div>
             </div>
             <h1 class="fw-bold mb-2 h2">
-              {{ developers.fullName(developer) }}
+              {{ developers.fullName(developer).value }}
             </h1>
             <h3 class="mb-4 h4">{{ developer.jobTitle }}</h3>
             <div class="d-flex gap-2 align-items-center">
@@ -51,19 +49,20 @@
             <div class="row">
               <h5 class="mb-3">Ferdigheter:</h5>
               <div class="col d-flex gap-3 mb-5 flex-wrap">
-                <developer-skill
+                <DeveloperSkill
                   v-for="skill in developer.skills"
                   :key="skill"
                   :skill="skill"
-                ></developer-skill>
+                />
               </div>
             </div>
             <div class="d-flex gap-3 mb-5">
-              <base-button cta @click="modal.toggleFormModal"
-                >Rediger</base-button
-              ><base-button warning @click="modal.toggleConfirmModal"
-                >Slett</base-button
-              >
+              <BaseButton cta @click="modal.toggleFormModal" title="Rediger" />
+              <BaseButton
+                warning
+                @click="modal.toggleConfirmModal"
+                title="Slett"
+              />
             </div>
           </div>
         </div>
@@ -89,6 +88,6 @@ const props = defineProps({
 
 const developers = useDeveloperService();
 const developer = developers.getOne(+props.id);
-
+console.log(developer);
 const modal = useModalService();
 </script>

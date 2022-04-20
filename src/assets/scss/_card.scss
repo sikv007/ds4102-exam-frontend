@@ -6,6 +6,8 @@
   transition: variables.$transition;
   box-shadow: variables.$shadow-small-2;
   position: relative;
+ 
+
 
   .h6 {
     color: variables.$primary;
@@ -17,6 +19,7 @@
     box-shadow: variables.$shadow-small;
     img {
       transform: scale(1.2);
+      
     }
   }
 }

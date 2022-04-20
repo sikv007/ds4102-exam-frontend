@@ -74,11 +74,26 @@ const deleteCompany = async (id) => {
 
 const getAll = computed(() => data.value);
 
-const getOne = (id) => {
-  const company = computed(() =>
-    data.value.find((company) => company.id === id)
+const getOne = (id) =>
+  computed(() => data.value.find((company) => company.id === id));
+
+const companyList = computed(() => data.value.map((company) => company.name));
+
+const findCompanyByAssignment = (assignment) =>
+  computed(() =>
+    data.value.find((company) => company.name === assignment.value.company)
   );
-  return company;
+
+const addAssignmentToCompany = async (company, assignment) => {
+  const currentCompany = await getData(`${companyUrl}${company.id}`);
+  console.log(currentCompany);
+  console.log(!currentCompany.assignments);
+  if (!currentCompany.assignments) currentCompany.assignments = [];
+  else currentCompany.assignments = currentCompany.assignments.split(",");
+  currentCompany.assignments.push(assignment.title);
+  currentCompany.assignments = currentCompany.assignments.join(",");
+  await putData(`${companyUrl}`, currentCompany);
+  await getCompanies();
 };
 
 export const useCompanyService = () => {
@@ -89,5 +104,8 @@ export const useCompanyService = () => {
     postCompany,
     deleteCompany,
     putCompany,
+    companyList: companyList.value,
+    findCompanyByAssignment,
+    addAssignmentToCompany,
   };
 };

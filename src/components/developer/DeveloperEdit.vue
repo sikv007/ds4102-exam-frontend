@@ -1,16 +1,16 @@
 <template>
-  <developer-form
+  <DeveloperForm
     title="Rediger utvikler"
     button="Lagre"
     @submit-form="submitForm"
     :id="id"
-  ></developer-form>
+  ></DeveloperForm>
 </template>
 
 <script setup>
 import { useDeveloperService } from "../../services/developerService";
 import DeveloperForm from "./DeveloperForm.vue";
-// eslint-disable-next-line no-unused-vars
+
 const props = defineProps({
   id: Number
 })

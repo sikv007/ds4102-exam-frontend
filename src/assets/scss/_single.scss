@@ -1,0 +1,7 @@
+@use "variables";
+
+.single {
+  background-color: variables.$background-light-2;
+  border-radius: variables.$border-radius;
+  box-shadow: variables.$shadow-small-2;
+}

@@ -1,12 +1,15 @@
 import axios from "axios";
+import { useAssignmentService } from "./services/assigmentService";
 import { useCompanyService } from "./services/companyService";
 import { useDeveloperService } from "./services/developerService";
 
 export const init = async () => {
   const developers = useDeveloperService();
   const companies = useCompanyService();
+  const assignments = useAssignmentService();
   await developers.getDevelopers();
   await companies.getCompanies();
+  await assignments.getAssignments();
 };
 
 export const getData = async (url) => {
@@ -18,14 +21,14 @@ export const postData = async (url, payload) => {
   await axios.post(url, payload);
 };
 
-export const postImage = async(url,payload) => {
-    await axios({
-      method: "POST",
-      url: `${url}PostImage`,
-      data: payload,
-      config: { header: { "Content-Type": "multipart/form-data" } },
-    });
-}
+export const postImage = async (url, payload) => {
+  await axios({
+    method: "POST",
+    url: `${url}PostImage`,
+    data: payload,
+    config: { header: { "Content-Type": "multipart/form-data" } },
+  });
+};
 
 export const putData = async (url, payload) => {
   await axios.put(url, payload);

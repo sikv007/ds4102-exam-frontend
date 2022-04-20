@@ -4,8 +4,8 @@
       <h3 class="fw-bold">Ønsker du å slette denne utvikleren?</h3>
       <p>Handlingen kan ikke angres.</p>
       <div class="col d-flex gap-4">
-        <base-button warning @click="submitForm">Bekreft</base-button>
-        <base-button outline @click="modal.toggleConfirmModal">Avbryt</base-button>
+        <BaseButton warning @click="submitForm" title="Bekreft" />
+        <BaeButton outline @click="modal.toggleConfirmModal" title="Avbryt" />
       </div>
     </div>
   </div>

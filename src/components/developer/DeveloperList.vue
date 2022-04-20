@@ -1,14 +1,38 @@
 <template>
-      <developer-item
-        v-for="developer in developers.getAll.value"
-        :key="developer.id"
-        :developer="developer"
-      ></developer-item>
+  <TransitionGroup name="list">
+    <DeveloperItem
+      v-for="developer in data"
+      :key="developer.id"
+      :list="list"
+      :card="card"
+      :developer="developer"
+      @event="emitEvent"
+      :button-text="buttonText"
+    />
+  </TransitionGroup>
 </template>
 
 <script setup>
-import { useDeveloperService } from "../../services/developerService";
 import DeveloperItem from "./DeveloperItem.vue";
-const developers = useDeveloperService();
-console.log(developers.getAll.value);
+
+const props = defineProps({
+  data: {
+    type: Object,
+  },
+  card: {
+    type: Boolean,
+  },
+  list: {
+    type: Boolean,
+  },
+  buttonText: {
+    type: String,
+  },
+});
+
+const emit = defineEmits(["event"]);
+
+const emitEvent = (id) => {
+  emit("event", id);
+};
 </script>

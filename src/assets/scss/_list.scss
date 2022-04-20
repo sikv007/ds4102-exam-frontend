@@ -1,0 +1,8 @@
+@use "variables";
+
+
+.list {
+  background: variables.$background-light-2;
+  box-shadow: variables.$shadow-small-2;
+  border-radius: variables.$border-radius;
+}

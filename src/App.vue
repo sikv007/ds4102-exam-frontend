@@ -2,7 +2,7 @@
   <div class="wrapper" :class="darkmode.isDarkMode.value">
     <the-header @toggle-nav="toggleNav"></the-header>
     <the-navigation :show="menuVisible" @close="closeNav"></the-navigation>
-    <main>
+    <main class="pb-5">
       <router-view v-slot="{ Component }">
         <transition name="route" mode="out-in">
           <component :is="Component" :key="$route.path"></component>
@@ -14,7 +14,10 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import TheNavigation from "./components/shared/layout/TheNavigation.vue";
+import { defineAsyncComponent } from "@vue/runtime-core";
+const TheNavigation = defineAsyncComponent(() =>
+  import("./components/shared/layout/TheNavigation.vue")
+);
 import TheHeader from "./components/shared/layout/TheHeader.vue";
 import { init } from "./helpers";
 import { useDarkModeService } from "./services/darkModeService";

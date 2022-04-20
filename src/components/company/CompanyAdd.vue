@@ -1,9 +1,9 @@
 <template>
-  <company-form
+  <CompanyForm
     title="Legg til kunde"
     button="Legg til"
     @submit-form="submitForm"
-  ></company-form>
+  />
 </template>
 
 <script setup>

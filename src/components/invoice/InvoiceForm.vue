@@ -7,17 +7,15 @@
         </div>
         <div class="row">
           <div class="col mb-4">
-            <label for="title" class="form-label">Tittel</label>
+            <label for="title" class="form-label">Produkt</label>
             <input
               class="form-control"
               type="text"
               id="title"
-              v-model="form.title"
-              placeholder="Ny nettside for Høyskolen Kristiania"
+              v-model="form.product"
+              placeholder="Ny nettside"
             />
           </div>
-        </div>
-        <div class="row">
           <div class="col mb-4">
             <label for="company" class="form-label">Kunde</label>
             <select class="form-select" v-model="form.company" id="company">
@@ -30,14 +28,28 @@
               </option>
             </select>
           </div>
+        </div>
+        <div class="row">
           <div class="col mb-4">
-            <label for="price" class="form-label">Pris</label>
+            <label for="price" class="form-label">Beløp</label>
             <input
               class="form-control"
               type="number"
               id="price"
-              v-model.number="form.price"
+              v-model.number="form.total"
               placeholder="400 000"
+            />
+          </div>
+          <div class="col mb-4">
+            <label for="price" class="form-label">Dager til forfall</label>
+            <input
+              class="form-control"
+              type="number"
+              id="price"
+              v-model.number="form.daysDue"
+              placeholder="14"
+              min="1"
+              step="1"
             />
           </div>
         </div>
@@ -64,7 +76,6 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
-import { getOne} from "../../services/assigmentService";
 import { useCompanyService } from "../../services/companyService";
 import * as modal from "../../services/modalService";
 
@@ -84,38 +95,36 @@ const props = defineProps({
   },
 });
 
-
 const companies = useCompanyService();
 
-
 const form = reactive({
-  title: "",
   company: companies.companyList[0],
-  price: null,
+  product: "",
+  daysDue: 14,
+  total: null,
   error: "pending",
   message: null,
 });
 
-let assignment;
+// let assignment;
 
-if (props.id) {
-  console.log(props.id);
-  assignment = getOne(+props.id);
-  form.title = assignment.value.title;
-  form.price = assignment.value.price;
-  form.id = assignment.value.id;
-  form.startDate = assignment.value.startDate
-  form.company =
-    companies.companyList[
-      companies.companyList.indexOf(assignment.value.company)
-    ];
-}
+// if (props.id) {
+//   console.log(props.id);
+//   assignment = assignments.getOne(+props.id);
+//   form.title = assignment.value.title;
+//   form.price = assignment.value.price;
+//   form.id = assignment.value.id;
+//   form.startDate = assignment.value.startDate
+//   form.company =
+//     companies.companyList[
+//       companies.companyList.indexOf(assignment.value.company)
+//     ];
+// }
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["submit-form"]);
 
 const submitForm = () => {
-  if (form.title === "") return;
+  if (form.firstName === "") return;
   emit("submit-form", form);
   modal.toggleFormModal();
 };

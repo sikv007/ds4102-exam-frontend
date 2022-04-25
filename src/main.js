@@ -13,6 +13,8 @@ const BaseEmpty = defineAsyncComponent(() =>
   import("./components/shared/ui/BaseEmpty.vue")
 );
 import BaseList from "./components/shared/ui/BaseList.vue";
+import BaseAlert from "./components/shared/ui/BaseAlert.vue"
+import BaseIcon from "./components/shared/ui/BaseIcon.vue"
 
 import "./assets/scss/main.scss";
 
@@ -25,5 +27,7 @@ app.component("BaseCard", BaseCard);
 app.component("BaseImage", BaseImage);
 app.component("BaseEmpty", BaseEmpty);
 app.component("BaseList", BaseList);
+app.component("BaseAlert", BaseAlert);
+app.component("BaseIcon", BaseIcon);
 app.use(router);
 app.mount("#app");

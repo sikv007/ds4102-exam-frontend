@@ -6,6 +6,8 @@ const CompanyView = () => import("../views/CompanyView.vue");
 const TheCompany = () => import("../views/TheCompany.vue");
 const AssignmentView = () => import("../views/AssignmentView.vue");
 const TheAssignment = () => import("../views/TheAssignment.vue");
+const InvoiceView = () => import("../views/InvoiceView.vue");
+const TheInvoice = () => import("../views/TheInvoice.vue");
 
 const router = createRouter({
   history: createWebHistory(),
@@ -39,6 +41,15 @@ const router = createRouter({
     {
       path: "/oppdrag/:id",
       component: TheAssignment,
+      props: true,
+    },
+    {
+      path: "/faktura",
+      component: InvoiceView,
+    },
+    {
+      path: "/faktura/:id",
+      component: TheInvoice,
       props: true,
     },
   ],

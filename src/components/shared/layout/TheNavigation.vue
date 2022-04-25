@@ -1,9 +1,9 @@
 <template>
-  <teleport to="body">
-    <transition name="overlay" mode="out-in" @click="close">
+  <Teleport to="body">
+    <Transition name="overlay" mode="out-in" @click="close">
       <div v-if="show" class="navigation-overlay"></div>
-    </transition>
-    <transition name="nav" mode="out-in">
+    </Transition>
+    <Transition name="nav" mode="out-in">
       <nav v-if="show">
         <div class="container py-5 px-5">
           <base-logo class="pb-5" @click="close"></base-logo>
@@ -28,26 +28,30 @@
                 >Kunder</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link to="/faktura" class="nav-link px-0" @click="close"
+                >Faktura</router-link
+              >
+            </li>
           </ul>
           <hr />
           <button @click="close">Close</button>
         </div>
       </nav>
-    </transition>
-  </teleport>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup>
-// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   show: {
     type: Boolean,
   },
 });
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close']);
 
 const close = () => {
-  emit("close");
+  emit('close');
 };
 </script>

@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-import { useAssignmentService } from "../../services/assigmentService";
 import { useCompanyService } from "../../services/companyService";
 
 const props = defineProps({
@@ -23,9 +22,6 @@ const props = defineProps({
   },
 });
 
-const assignments = useAssignmentService();
 const companies = useCompanyService();
-
 const company = companies.getAll.value.find((company) => company.name === props.assignment.company);
-
 </script>

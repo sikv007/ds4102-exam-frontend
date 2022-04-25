@@ -12,8 +12,11 @@
 </template>
 
 <script setup>
-import { useDeveloperService } from "../../services/developerService";
-import { useModalService } from "../../services/modalService";
+import {
+  deleteDeveloper,
+  getDevelopers,
+} from "../../services/developerService";
+import * as modal from "../../services/modalService";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -23,12 +26,11 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const developers = useDeveloperService();
-const modal = useModalService();
+
 const submitForm = async () => {
-  await developers.deleteDeveloper(props.id);
+  await deleteDeveloper(props.id);
   router.back();
-  await developers.getDevelopers();
+  await getDevelopers();
   modal.confirmModalVisible.value = false;
 };
 </script>

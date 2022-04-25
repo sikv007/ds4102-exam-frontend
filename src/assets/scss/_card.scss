@@ -1,13 +1,11 @@
 @use "variables";
 
 .card {
-  background-color: variables.$background-light-2;
+  background-color: variables.$background-light-3;
+  border: 1px solid variables.$background-light-2;
   border-radius: variables.$border-radius;
-  transition: variables.$transition;
-  box-shadow: variables.$shadow-small-2;
+  // transition: variables.$transition;
   position: relative;
- 
-
 
   .h6 {
     color: variables.$primary;
@@ -15,8 +13,6 @@
 
   &:hover {
     transform: scale(1.05);
-    // color: variables.$primary;
-    box-shadow: variables.$shadow-small;
     img {
       transform: scale(1.2);
       

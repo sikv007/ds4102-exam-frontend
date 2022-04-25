@@ -81,7 +81,7 @@
 <script setup>
 import { reactive } from "@vue/reactivity";
 import { useCompanyService } from "../../services/companyService";
-import { useModalService } from "../../services/modalService";
+import * as modal from "../../services/modalService";
 
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
@@ -98,8 +98,6 @@ const props = defineProps({
     type: Number,
   },
 });
-
-const modal = useModalService();
 
 const companies = useCompanyService();
 
@@ -131,7 +129,6 @@ if (props.id) {
   form.id = company.value.id;
 }
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits(["submit-form"]);
 
 const submitForm = () => {

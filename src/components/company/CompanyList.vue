@@ -12,5 +12,4 @@ import CompanyItem from "./CompanyItem.vue"
 
 const companies = useCompanyService();
 
-console.log(companies.getAll.value);
 </script>

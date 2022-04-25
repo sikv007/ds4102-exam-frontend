@@ -4,10 +4,9 @@ import { API_URL, HOST } from "../config";
 import { deleteData, getData, postData, postImage, putData } from "../helpers";
 
 const data = ref([]);
-
 const developerUrl = `${API_URL}developer/`;
 
-const getDevelopers = async () => {
+export const getDevelopers = async () => {
   const res = await getData(developerUrl);
   const devs = [];
   res.forEach((dev) => {
@@ -28,11 +27,11 @@ const getDevelopers = async () => {
   data.value = devs;
 };
 
-const postDeveloperImage = async (image) => {
+export const postDeveloperImage = async (image) => {
   await postImage(developerUrl, image);
 };
 
-const postDeveloper = async (developer, image) => {
+export const postDeveloper = async (developer, image) => {
   const newDeveloper = {
     firstName: developer.firstName,
     lastName: developer.lastName,
@@ -47,7 +46,7 @@ const postDeveloper = async (developer, image) => {
   await getDevelopers();
 };
 
-const putDeveloper = async (developer, image) => {
+export const putDeveloper = async (developer, image) => {
   const editedDeveloper = {
     id: developer.id,
     firstName: developer.firstName,
@@ -70,11 +69,11 @@ const putDeveloper = async (developer, image) => {
   await getDevelopers();
 };
 
-const deleteDeveloper = async (id) => {
+export const deleteDeveloper = async (id) => {
   await deleteData(`${developerUrl}${id}`);
 };
 
-const jobTitles = [
+export const jobTitles = [
   "Front-end utvikler",
   "Back-end utvikler",
   "Full-stack utvikler",
@@ -82,7 +81,7 @@ const jobTitles = [
   "Grafisk designer",
 ];
 
-const skills = [
+export const skills = [
   "JavaScript",
   "Vue",
   "React",
@@ -101,26 +100,28 @@ const skills = [
   "MySQL",
 ];
 
-const getAll = computed(() => data.value);
+export const getAll = computed(() => data.value);
 
-const getOne = (id) =>
+export const getOne = (id) =>
   computed(() => data.value.find((developer) => developer.id === id));
 
-const fullName = (developer) =>
+export const fullName = (developer) =>
   computed(() => `${developer.firstName} ${developer.lastName}`);
 
-const getAvailableDevelopers = computed(() =>
+export const dateOfBirth = (developer) => computed(()=> new Date(developer.dateOfBirth).toLocaleDateString("no-NB"))
+
+export const getAvailableDevelopers = computed(() =>
   data.value.filter((developer) => !developer.assignment)
 );
 
-const addAssignmentToDeveloper = async (id, assignment) => {
+export const addAssignmentToDeveloper = async (id, assignment) => {
   const developer = await getData(`${developerUrl}${id}`);
   developer.assignment = assignment.id;
   await putData(`${developerUrl}`, developer);
   await getDevelopers();
 };
 
-const removeAssignmentFromDeveloper = async (id) => {
+export const removeAssignmentFromDeveloper = async (id) => {
   const developer = await getData(`${developerUrl}${id}`);
   developer.assignment = null;
   await putData(`${developerUrl}`, developer);
@@ -128,7 +129,7 @@ const removeAssignmentFromDeveloper = async (id) => {
 };
 
 
-const developerAvailable = (developer) => {
+export const developerAvailable = (developer) => {
   return computed(() => {
     return !developer.assignment
       ? {
@@ -139,26 +140,7 @@ const developerAvailable = (developer) => {
   }).value;
 };
 
-const getDevelopersFromAssignment = (assignment) =>
+export const getDevelopersFromAssignment = (assignment) =>
   computed(() =>
     data.value.filter((developer) => developer.assignment === assignment)
   );
-
-export const useDeveloperService = () => {
-  return {
-    getAll,
-    getDevelopers,
-    jobTitles,
-    skills,
-    postDeveloper,
-    getOne,
-    fullName,
-    putDeveloper,
-    developerAvailable,
-    deleteDeveloper,
-    getAvailableDevelopers,
-    addAssignmentToDeveloper,
-    getDevelopersFromAssignment,
-    removeAssignmentFromDeveloper,
-  };
-};

@@ -30,7 +30,7 @@
             </h1>
 
             <div class="d-flex gap-3 mb-5">
-              <BaeButton cta @click="modal.toggleFormModal" title="Rediger" />
+              <BaseButton cta @click="modal.toggleFormModal" title="Rediger" />
               <BaseButton
                 warning
                 @click="modal.toggleConfirmModal"
@@ -47,7 +47,7 @@
 <script setup>
 import { defineAsyncComponent } from "@vue/runtime-core";
 import { useCompanyService } from "../services/companyService";
-import { useModalService } from "../services/modalService";
+import * as modal from "../services/modalService";
 const CompanyEdit = defineAsyncComponent(() =>
   import("../components/company/CompanyEdit.vue")
 );
@@ -65,5 +65,4 @@ const companies = useCompanyService();
 const company = companies.getOne(+props.id);
 console.log(company);
 
-const modal = useModalService();
 </script>

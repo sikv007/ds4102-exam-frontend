@@ -8,15 +8,14 @@
 </template>
 
 <script setup>
-import { useDeveloperService } from "../../services/developerService";
+import { putDeveloper } from "../../services/developerService";
 import DeveloperForm from "./DeveloperForm.vue";
 
 const props = defineProps({
   id: Number
 })
-const developers = useDeveloperService();
 
 const submitForm = async (data, image) => {
-  await developers.putDeveloper(data, image);
+  await putDeveloper(data, image);
 };
 </script>

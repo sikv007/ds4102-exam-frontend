@@ -1,13 +1,13 @@
-import axios from "axios";
-import { computed, ref } from "vue";
-import { API_URL, HOST } from "../config";
-import { deleteData, getData, postData, putData } from "../helpers";
+import axios from 'axios';
+import { computed, ref } from 'vue';
+import { API_URL, HOST } from '../config';
+import { deleteData, getData, postData, putData } from '../helpers';
 
 const data = ref([]);
 
 const assignmentUrl = `${API_URL}assignment/`;
 
-const getAssignments = async () => {
+export const getAssignments = async () => {
   const res = await getData(assignmentUrl);
   const assignments = [];
   res.forEach((el) => {
@@ -18,15 +18,19 @@ const getAssignments = async () => {
       startDate: el.startDate,
       endDate: el.endDate,
       price: el.price,
-      team: el.team?.split(",") || null,
+      team: el.team?.split(',') || null,
       completed: el.completed,
     };
+    if (assignment.team && assignment.team[0] === '') {
+      assignment.team = null
+    }
     assignments.push(assignment);
   });
+  console.log(assignments);
   data.value = assignments;
 };
 
-const postAssignment = async (assignment) => {
+export const postAssignment = async (assignment) => {
   const newAssignment = {
     title: assignment.title,
     company: assignment.company,
@@ -37,7 +41,7 @@ const postAssignment = async (assignment) => {
   await getAssignments();
 };
 
-const putAssignment = async (assignment) => {
+export const putAssignment = async (assignment) => {
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
   console.log(currentAssignment);
 
@@ -48,7 +52,7 @@ const putAssignment = async (assignment) => {
     price: assignment.price,
     startDate: assignment.startDate,
     team: currentAssignment.team,
-    completed: currentAssignment.completed
+    completed: currentAssignment.completed,
   };
 
   console.log(editedAssignment);
@@ -57,16 +61,16 @@ const putAssignment = async (assignment) => {
   await getAssignments();
 };
 
-// const deleteCompany = async (id) => {
-//   await deleteData(`${assignmentUrl}${id}`);
-// };
+export const deleteAssignment = async (id) => {
+  await deleteData(`${assignmentUrl}${id}`);
+};
 
-const getAll = computed(() => data.value);
+export const getAll = computed(() => data.value);
 
-const getOne = (id) =>
+export const getOne = (id) =>
   computed(() => data.value.find((assignment) => assignment.id === id));
 
-const deleteAssignmentsFromCompany = async (company) => {
+export const deleteAssignmentsFromCompany = async (company) => {
   const assignments = getAll.value.filter(
     (assignment) => assignment.company === company.name
   );
@@ -75,21 +79,25 @@ const deleteAssignmentsFromCompany = async (company) => {
   });
 };
 
-const addDeveloperToAssignment = async (developerId, assignment) => {
+export const addDeveloperToAssignment = async (developerId, assignment) => {
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
   if (!currentAssignment.team) currentAssignment.team = [];
-  else currentAssignment.team = currentAssignment.team.split(",");
-  currentAssignment.team.push(developerId + "");
+  else currentAssignment.team = currentAssignment.team.split(',');
+  currentAssignment.team.push(developerId + '');
   currentAssignment.team = currentAssignment.team.join();
   await putData(`${assignmentUrl}`, currentAssignment);
   await getAssignments();
 };
 
-const removeDeveloperFromAssignment = async (developerId, assignment) => {
+export const removeDeveloperFromAssignment = async (
+  developerId,
+  assignment
+) => {
+  console.log(assignment);
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
-  currentAssignment.team = currentAssignment.team.split(",");
+  currentAssignment.team = currentAssignment.team.split(',');
   currentAssignment.team.splice(
-    currentAssignment.team.indexOf(developerId + ""),
+    currentAssignment.team.indexOf(developerId + ''),
     1
   );
   currentAssignment.team = currentAssignment.team.join();
@@ -97,25 +105,10 @@ const removeDeveloperFromAssignment = async (developerId, assignment) => {
   await getAssignments();
 };
 
-const price = (price) =>
-  computed(() => new Intl.NumberFormat("nb-NO").format(price));
+export const price = (price) =>
+  computed(() => new Intl.NumberFormat('nb-NO').format(price));
 
-const getAssignmentsFromCompany = (company) =>
+export const getAssignmentsFromCompany = (company) =>
   computed(() =>
     data.value.filter((assignment) => assignment.company === company.name)
   );
-
-export const useAssignmentService = () => {
-  return {
-    getAssignments,
-    postAssignment,
-    getAll,
-    getOne,
-    deleteAssignmentsFromCompany,
-    addDeveloperToAssignment,
-    removeDeveloperFromAssignment,
-    getAssignmentsFromCompany,
-    price,
-    putAssignment,
-  };
-};

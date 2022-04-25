@@ -1,13 +1,13 @@
 <template>
   <AssignmentItem
-    v-for="assignment in assignments.getAll.value"
+    v-for="assignment in getAll"
     :key="assignment.id"
     :assignment="assignment"
   />
 </template>
 
 <script setup>
-import { useAssignmentService } from "../../services/assigmentService";
+import { getAll } from "../../services/assigmentService";
 import AssignmentItem from "./AssignmentItem.vue";
-const assignments = useAssignmentService();
+// const assignments = useAssignmentService();
 </script>

@@ -3,7 +3,7 @@
     v-if="preview"
     class="availability"
     :class="{
-      ...developers.developerAvailable(developer).class,
+      ...developerAvailable(developer).class,
       ...availabilityClass,
     }"
   >
@@ -15,7 +15,7 @@
   <span v-else
     class="availability"
     :class="{
-      ...developers.developerAvailable(developer).class,
+      ...developerAvailable(developer).class,
       ...availabilityClass,
     }"
   >
@@ -24,13 +24,13 @@
       <span class="availability-circle--inner"></span>
     </span>
 
-    <span>{{ developers.developerAvailable(developer).text }}</span>
+    <span>{{ developerAvailable(developer).text }}</span>
   </span>
 </template>
 
 <script setup>
 import { computed } from "@vue/runtime-core";
-import { useDeveloperService } from "../../services/developerService";
+import { developerAvailable } from "../../services/developerService";
 
 const props = defineProps({
   developer: {
@@ -44,11 +44,10 @@ const props = defineProps({
   },
 });
 
-const developers = useDeveloperService();
-
 const availabilityClass = computed(() => {
   if (props.small) return { "availability--small": true };
   if (props.preview) return { "availability--preview": true };
   else return { "availability--large": true };
 });
+
 </script>

@@ -36,11 +36,7 @@
 <script setup>
 import { defineAsyncComponent } from "@vue/runtime-core";
 import DeveloperList from "../components/developer/DeveloperList.vue";
-const DeveloperAdd = defineAsyncComponent(() =>
-  import("../components/developer/DeveloperAdd.vue")
-);
-import { useModalService } from "../services/modalService";
-import { useDeveloperService } from "../services/developerService";
-const modal = useModalService();
-const developers = useDeveloperService();
+import DeveloperAdd from"../components/developer/DeveloperAdd.vue"
+import * as modal from "../services/modalService";
+import * as developers from "../services/developerService";
 </script>

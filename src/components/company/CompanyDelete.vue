@@ -15,11 +15,15 @@
 </template>
 
 <script setup>
-import { useCompanyService } from "../../services/companyService";
-import { useModalService } from "../../services/modalService";
-import { useRouter } from "vue-router";
-import { useAssignmentService } from "../../services/assigmentService";
-import { useDeveloperService } from "../../services/developerService";
+import { useCompanyService } from '../../services/companyService';
+import * as modal from '../../services/modalService';
+import { useRouter } from 'vue-router';
+import {
+  getAssignmentsFromCompany,
+  getAssignments,
+  deleteAssignmentsFromCompany,
+} from '../../services/assigmentService';
+import { removeAssignmentFromDeveloper } from '../../services/developerService';
 
 const props = defineProps({
   id: {
@@ -29,28 +33,25 @@ const props = defineProps({
 
 const router = useRouter();
 const companies = useCompanyService();
-const assignments = useAssignmentService();
-const developers = useDeveloperService();
-const modal = useModalService();
 
 const submitForm = async () => {
   const company = companies.getOne(props.id).value;
-  const assignment = assignments.getAssignmentsFromCompany(company).value;
+  const assignment = getAssignmentsFromCompany(company).value;
 
   // Slett utviklere fra oppdrag knyttet til bedriften om oppdrag eksisterer
   if (assignment.value) {
     assignment.forEach((assignment) => {
-      assignment.team.forEach((developer) => {
-        developers.removeAssignmentFromDeveloper(+developer);
+      assignment.team.forEach(async developer => {
+        await removeAssignmentFromDeveloper(+developer);
       });
     });
   }
 
-  await assignments.deleteAssignmentsFromCompany(company);
+  await deleteAssignmentsFromCompany(company);
   await companies.deleteCompany(props.id);
   router.back();
   await companies.getCompanies();
-  await assignments.getAssignments();
+  await getAssignments();
   modal.confirmModalVisible.value = false;
 };
 </script>

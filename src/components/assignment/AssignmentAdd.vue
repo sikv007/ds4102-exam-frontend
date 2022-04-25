@@ -7,15 +7,17 @@
 </template>
 
 <script setup>
+// Komponenter
 import AssignmentForm from "./AssignmentForm.vue";
-import { useAssignmentService } from "../../services/assigmentService";
+
+// Service
+import { postAssignment, addAssignmentToCompany } from "../../services/assigmentService";
 import { useCompanyService } from "../../services/companyService";
 
-const assignments = useAssignmentService();
 const companies = useCompanyService();
 
 const submitForm = async (data) => {
-  await assignments.postAssignment(data);
+  await postAssignment(data);
   const company = companies.getAll.value.find(
     (company) => company.name === data.company
   );

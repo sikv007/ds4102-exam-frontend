@@ -13,6 +13,7 @@ export const getInvoices = async () => {
   res.forEach((invoice) => {
     const inv = {
       id: invoice.id,
+      title: invoice.title,
       company: invoice.company,
       product: invoice.product,
       daysDue: invoice.daysDue,
@@ -25,10 +26,19 @@ export const getInvoices = async () => {
   data.value = invoices;
 };
 
-export const getAll = computed(() => data.value);
+export const daysDue = (invoice) => computed(() => invoice.daysDue);
 
-// export const useCompanyService = () => {
-//   return {
-//     getInvoices
-//   };
-// };
+export const postInvoice = async (invoice) => {
+  console.log(invoice);
+  const newInvoice = {
+    company: invoice.company,
+    product: invoice.product,
+    total: invoice.total,
+    daysDue: invoice.daysDue,
+    sent: false,
+  };
+  await postData(invoiceUrl, newInvoice);
+  await getInvoices();
+};
+
+export const getAll = computed(() => data.value);

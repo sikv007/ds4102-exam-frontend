@@ -1,15 +1,21 @@
-import axios from "axios";
-import { useAssignmentService } from "./services/assigmentService";
-import { useCompanyService } from "./services/companyService";
-import { useDeveloperService } from "./services/developerService";
+import axios from 'axios';
+import { getAssignments } from './services/assigmentService';
+import { useCompanyService } from './services/companyService';
+import { getDevelopers } from './services/developerService';
+import { getInvoices } from './services/invoiceService';
+import { setError } from './services/appService';
 
 export const init = async () => {
-  const developers = useDeveloperService();
-  const companies = useCompanyService();
-  const assignments = useAssignmentService();
-  await developers.getDevelopers();
-  await companies.getCompanies();
-  await assignments.getAssignments();
+  try {
+    const companies = useCompanyService();
+    await getDevelopers();
+    await getInvoices();
+    await companies.getCompanies();
+    await getAssignments();
+  } catch(err) {
+    setError(true, err.message);
+    console.error(err)
+  }
 };
 
 export const getData = async (url) => {
@@ -23,10 +29,10 @@ export const postData = async (url, payload) => {
 
 export const postImage = async (url, payload) => {
   await axios({
-    method: "POST",
+    method: 'POST',
     url: `${url}PostImage`,
     data: payload,
-    config: { header: { "Content-Type": "multipart/form-data" } },
+    config: { header: { 'Content-Type': 'multipart/form-data' } },
   });
 };
 

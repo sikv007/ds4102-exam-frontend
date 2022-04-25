@@ -25,15 +25,15 @@
         </div>
       </div>
       <div class="row gx-4">
-        <BaseEmpty
+        <!-- <BaseEmpty
           v-if="companies.getAll.value.length === 0"
           title="For å kunne legge til oppdrag må du først legge til en kunde."
         />
         <BaseEmpty
-          v-else-if="assignments.getAll.value.length === 0"
+          v-else-if="assignments.value.length === 0"
           title="Fant ingen oppdrag."
-        />
-        <AssignmentList v-else />
+        /> -->
+        <AssignmentList />
       </div>
     </div>
   </div>
@@ -42,10 +42,8 @@
 <script setup>
 import AssignmentList from "../components/assignment/AssignmentList.vue";
 import AssignmentAdd from "../components/assignment/AssignmentAdd.vue";
-import { useModalService } from "../services/modalService";
-import { useAssignmentService } from "../services/assigmentService";
+import * as modal from "../services/modalService";
+import { getAll as assignments } from "../services/assigmentService";
 import { useCompanyService } from "../services/companyService";
-const modal = useModalService();
-const assignments = useAssignmentService();
 const companies = useCompanyService();
 </script>

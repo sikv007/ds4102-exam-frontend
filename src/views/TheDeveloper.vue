@@ -25,7 +25,7 @@
           >
             <BaseImage
               :src="developer.image"
-              :alt="developers.fullName(developer).value"
+              :alt="fullName(developer).value"
             />
           </div>
           <div class="col-12 col-lg-6">
@@ -34,18 +34,7 @@
                 <DeveloperAvailability :developer="developer" />
               </div>
             </div>
-            <h1 class="fw-bold mb-2 h2">
-              {{ developers.fullName(developer).value }}
-            </h1>
-            <h3 class="mb-4 h4">{{ developer.jobTitle }}</h3>
-            <div class="d-flex gap-2 align-items-center">
-              <i class="bi bi-envelope-fill"></i>
-              <a :href="`mailto:${developer.email}`">{{ developer.email }}</a>
-            </div>
-            <div class="d-flex gap-2 align-items-center mb-5">
-              <i class="bi bi-telephone-fill"></i>
-              <a :href="`tel:${developer.phone}`">{{ developer.phone }}</a>
-            </div>
+            <DeveloperDetails :developer="developer" />
             <div class="row">
               <h5 class="mb-3">Ferdigheter:</h5>
               <div class="col d-flex gap-3 mb-5 flex-wrap">
@@ -72,13 +61,14 @@
 </template>
 
 <script setup>
-import DeveloperSkill from "../components/developer/DeveloperSkill.vue";
-import { useDeveloperService } from "../services/developerService";
-import { useModalService } from "../services/modalService";
-import DeveloperEdit from "../components/developer/DeveloperEdit.vue";
-import { computed } from "@vue/runtime-core";
-import DeveloperAvailability from "../components/developer/DeveloperAvailability.vue";
-import DeveloperDelete from "../components/developer/DeveloperDelete.vue";
+import DeveloperSkill from '../components/developer/DeveloperSkill.vue';
+import DeveloperDetails from '../components/developer/DeveloperDetails.vue';
+import { getOne, fullName} from '../services/developerService';
+import * as modal from '../services/modalService';
+import DeveloperEdit from '../components/developer/DeveloperEdit.vue';
+import { computed } from '@vue/runtime-core';
+import DeveloperAvailability from '../components/developer/DeveloperAvailability.vue';
+import DeveloperDelete from '../components/developer/DeveloperDelete.vue';
 
 const props = defineProps({
   id: {
@@ -86,8 +76,5 @@ const props = defineProps({
   },
 });
 
-const developers = useDeveloperService();
-const developer = developers.getOne(+props.id);
-console.log(developer);
-const modal = useModalService();
+const developer = getOne(+props.id);
 </script>

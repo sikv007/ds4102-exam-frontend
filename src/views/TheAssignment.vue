@@ -8,10 +8,18 @@
       <AssignmentEdit :id="assignment.id" />
     </BaseModal>
     <BaseModal
+      :show="modal.deleteModalVisible.value"
+      confirm
+      @close="modal.toggDeleteModal"
+    >
+      <AssignmentDelete :id="assignment.id" />
+    </BaseModal>
+    <BaseModal
       :show="modal.confirmModalVisible.value"
       confirm
       @close="modal.toggleConfirmModal"
-      ><CompanyDelete :id="assignment.id" />
+    >
+      <AssignmentComplete :id="assignment.id" />
     </BaseModal>
     <div class="row gap-4">
       <BaseBack to="/oppdrag" title="Oppdrag" />
@@ -24,7 +32,7 @@
               </h1>
               <h4 class="mb-5">{{ assignment.company }}</h4>
               <p>{{ company.contactName }}</p>
-              <p>{{ assignments.price(assignment.price).value }}</p>
+              <p>{{ price(assignment.price).value }}</p>
               <p class="mb-5">{{ company.contactEmail }}</p>
             </div>
             <div class="col">
@@ -33,12 +41,16 @@
             <div class="row">
               <div class="col-12 position-relative">
                 <h5 class="mb-2 fw-bold">Utviklere på dette oppdraget</h5>
+                <BaseAlert
+                  v-if="
+                    getDevelopersFromAssignment(assignment.id).value.length ===
+                    0
+                  "
+                  message="Fant ingen utviklere knyttet til dette oppdraget"
+                />
                 <DeveloperList
                   list
-                  :data="
-                    developers.getDevelopersFromAssignment(assignment.title)
-                      .value
-                  "
+                  :data="getDevelopersFromAssignment(assignment.id).value"
                   @event="removeAssignment"
                   button-text="Fjern fra oppdrag"
                 />
@@ -50,15 +62,38 @@
 
       <div class="col-12 col-lg-3 single p-5">
         <div class="col">
-          <BaseButton cta @click="modal.toggleFormModal" title="Rediger" />
+          <BaseButton
+            class="w-100"
+            cta
+            @click="modal.toggleFormModal"
+            title="Rediger"
+          />
         </div>
-        <BaseButton warning @click="modal.toggleConfirmModal" title="Slett" />
+        <div>
+          <BaseButton
+            class="w-100"
+            warning
+            @click="modal.toggleDeleteModal"
+            title="Slett"
+          />
+        </div>
+        <BaseButton
+          class="w-100"
+          warning
+          @click="modal.toggleConfirmModal"
+          title="Marker oppdrag som fullført"
+        />
       </div>
 
       <div class="col-12 single p-5">
         <h5 class="mb-4 fw-bold">Ledige utviklere</h5>
+        <BaseAlert
+          v-if="getAvailableDevelopers.length === 0"
+          message="Fant ingen ledige utviklere"
+        />
         <DeveloperList
-          :data="developers.getAvailableDevelopers.value"
+          v-else
+          :data="getAvailableDevelopers"
           @event="addAssignment"
           button-text="Legg til i oppdrag"
         />
@@ -68,15 +103,27 @@
 </template>
 
 <script setup>
-import { useCompanyService } from "../services/companyService";
-import { useModalService } from "../services/modalService";
-import DeveloperList from "../components/developer/DeveloperList.vue";
-import AssignmentEdit from "../components/assignment/AssignmentEdit.vue";
-import CompanyDelete from "../components/company/CompanyDelete.vue";
-import { useAssignmentService } from "../services/assigmentService";
-import { useDeveloperService } from "../services/developerService";
-import { provide } from "@vue/runtime-core";
-const developers = useDeveloperService();
+// Komponenter
+import DeveloperList from '../components/developer/DeveloperList.vue';
+import AssignmentEdit from '../components/assignment/AssignmentEdit.vue';
+import AssignmentDelete from '../components/assignment/AssignmentDelete.vue';
+import AssignmentComplete from '../components/assignment/AssignmentComplete.vue';
+
+// Services
+import { useCompanyService } from '../services/companyService';
+import * as modal from '../services/modalService';
+import {
+  getOne,
+  addDeveloperToAssignment,
+  removeDeveloperFromAssignment,
+  price,
+} from '../services/assigmentService';
+import {
+  addAssignmentToDeveloper,
+  removeAssignmentFromDeveloper,
+  getAvailableDevelopers,
+  getDevelopersFromAssignment,
+} from '../services/developerService';
 
 const props = defineProps({
   id: {
@@ -84,26 +131,19 @@ const props = defineProps({
   },
 });
 
-const assignments = useAssignmentService();
 const companies = useCompanyService();
-const assignment = assignments.getOne(+props.id);
+const assignment = getOne(+props.id);
 const company = companies.findCompanyByAssignment(assignment);
-
-const testEvent = (id) => {
-  console.log(id);
-};
 
 const addAssignment = async (id) => {
   console.log(id);
   console.log(assignment);
-  await developers.addAssignmentToDeveloper(id, assignment.value);
-  await assignments.addDeveloperToAssignment(id, assignment.value);
+  await addAssignmentToDeveloper(id, assignment.value);
+  await addDeveloperToAssignment(id, assignment.value);
 };
 
 const removeAssignment = async (id) => {
-  await assignments.removeDeveloperFromAssignment(id, assignment.value);
-  await developers.removeAssignmentFromDeveloper(id, assignment.value);
+  await removeDeveloperFromAssignment(id, assignment.value);
+  await removeAssignmentFromDeveloper(id, assignment.value);
 };
-
-const modal = useModalService();
 </script>

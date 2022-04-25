@@ -54,7 +54,7 @@
             <label for="jobTitle" class="form-label">Stilling</label>
             <select class="form-select" v-model="form.jobTitle" id="jobTitle">
               <option
-                v-for="jobTitle in developers.jobTitles"
+                v-for="jobTitle in jobTitles"
                 :key="jobTitle"
                 :value="jobTitle"
               >
@@ -79,7 +79,7 @@
             <div><label class="form-label">Ferdigheter</label></div>
             <div
               class="form-check form-check-inline"
-              v-for="skill in developers.skills"
+              v-for="skill in skills"
               :key="skill"
             >
               <label class="form-check-label" :for="skill">{{ skill }}</label>
@@ -106,7 +106,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <BaseButton cta :title="button"/>
+            <BaseButton cta :title="button" />
           </div>
         </div>
       </div>
@@ -115,11 +115,11 @@
 </template>
 
 <script setup>
-import { reactive } from "@vue/reactivity";
-import { useDeveloperService } from "../../services/developerService";
-import { useModalService } from "../../services/modalService";
+import { useValidate } from '../../hooks/useInput';
+import { reactive } from '@vue/reactivity';
+import { jobTitles, getOne, skills } from '../../services/developerService';
+import * as modal from '../../services/modalService';
 
-// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   title: {
     type: String,
@@ -135,32 +135,30 @@ const props = defineProps({
   },
 });
 
-const modal = useModalService();
-
-const developers = useDeveloperService();
-
 const form = reactive({
-  firstName: "",
-  lastName: "",
+  firstName: '',
+  lastName: '',
   phone: null,
   dateOfBirth: null,
-  jobTitle: developers.jobTitles[0],
+  jobTitle: jobTitles[0],
   skills: [],
-  error: "pending",
+  error: 'pending',
   message: null,
 });
+
 
 const image = new FormData();
 
 const setImage = (e) => {
-  image.delete("file");
-  image.append("file", e.target.files[0]);
+  image.delete('file');
+  image.append('file', e.target.files[0]);
 };
 
 let developer;
 
+// Sett utvikler hvis man redigerer
 if (props.id) {
-  developer = developers.getOne(props.id);
+  developer = getOne(props.id);
   console.log(developer.value);
   form.firstName = developer.value.firstName;
   form.lastName = developer.value.lastName;
@@ -171,13 +169,11 @@ if (props.id) {
   form.id = developer.value.id;
 }
 
-
 // eslint-disable-next-line no-unused-vars
-const emit = defineEmits(["submit-form"]);
+const emit = defineEmits(['submit-form']);
 
 const submitForm = () => {
-  if (form.firstName === "") return;
-  emit("submit-form", form, image);
+  emit('submit-form', form, image);
   modal.toggleFormModal();
 };
 </script>

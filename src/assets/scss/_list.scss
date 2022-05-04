@@ -1,8 +1,14 @@
-@use "variables";
-
+@use 'variables';
 
 .list {
   border: 1px solid variables.$background-light-2;
   background-color: variables.$background-light-3;
   border-radius: variables.$border-radius;
+}
+
+.dark-mode {
+  .list {
+    border: 1px solid variables.$background-dark-2;
+    background-color: variables.$background-dark-3;
+  }
 }

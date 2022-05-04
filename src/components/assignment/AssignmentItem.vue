@@ -1,10 +1,6 @@
 <template>
   <BaseCard :to="`/oppdrag/${assignment.id}`">
-    <BaseImage
-      :src="company.image"
-      :alt="company.name"
-      small
-    />
+    <BaseImage :src="company.image" :alt="company.name" small />
     <div>
       <h5 class="fw-bold mb-0">{{ assignment.title }}</h5>
       <p>{{ assignment.company }}</p>
@@ -14,14 +10,18 @@
 </template>
 
 <script setup>
-import { useCompanyService } from "../../services/companyService";
+// Service
+import { getAll } from '../../services/companyService';
 
+// Props
 const props = defineProps({
   assignment: {
     type: Object,
   },
 });
 
-const companies = useCompanyService();
-const company = companies.getAll.value.find((company) => company.name === props.assignment.company);
+// Finn kunde knyttet til oppdrag
+const company = getAll.value.find(
+  (company) => company.name === props.assignment.company
+);
 </script>

@@ -1,0 +1,59 @@
+@use 'variables';
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: variables.$background-light-2;
+    border-radius: 200px;
+    -webkit-transition: variables.$transition-bezier;
+    transition: variables.$transition-bezier;
+
+    .icon {
+      position: absolute;
+      left: 8px;
+      bottom: 4px;
+      transition: variables.$transition-bezier;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      border-radius: 50%;
+      background-color: #fff;
+      transition: variables.$transition-bezier;
+    }
+  }
+
+  input:checked {
+    & + .slider {
+      background-color: variables.$primary;
+      .icon {
+        transform: translateX(26px);
+      }
+    }
+    & + .slider::before {
+      transform: translateX(26px);
+    }
+  }
+}

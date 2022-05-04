@@ -1,31 +1,36 @@
 <template>
-  <div class="wrapper" :class="darkmode.isDarkMode.value">
-    <the-header @toggle-nav="toggleNav"></the-header>
-    <the-navigation :show="menuVisible" @close="closeNav"></the-navigation>
+  <div class="wrapper" :class="isDarkMode">
+    <TheHeader @toggle-nav="toggleNav" />
+    <TheNavigation :show="menuVisible" @close="closeNav" />
     <main class="pb-5">
-      <router-view v-slot="{ Component }">
-        <transition name="route" mode="out-in">
-          <component :is="Component" :key="$route.path"></component>
-        </transition>
-      </router-view>
+      <RouterView v-slot="{ Component }">
+        <Transition name="route" mode="out-in">
+          <Component :is="Component" :key="$route.path" />
+        </Transition>
+      </RouterView>
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
-import { defineAsyncComponent } from "@vue/runtime-core";
-const TheNavigation = defineAsyncComponent(() =>
-  import("./components/shared/layout/TheNavigation.vue")
-);
-import TheHeader from "./components/shared/layout/TheHeader.vue";
-import { init } from "./helpers";
-import { useDarkModeService } from "./services/darkModeService";
-const darkmode = useDarkModeService();
+import { ref } from 'vue';
+
+// Komponenter
+import TheNavigation from './components/shared/layout/TheNavigation.vue';
+import TheHeader from './components/shared/layout/TheHeader.vue';
+
+// Service
+import { init } from './helpers';
+import { isDarkMode } from './services/darkModeService';
+
 const menuVisible = ref(false);
+
+// Vis/Skjul Navigasjon
 const toggleNav = () => (menuVisible.value = !menuVisible.value);
+
 const closeNav = () => {
   menuVisible.value = false;
 };
+
 init();
 </script>

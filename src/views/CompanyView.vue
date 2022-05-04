@@ -23,17 +23,18 @@
         </div>
       </div>
       <div class="row gx-4">
-        <base-empty v-if="companies.getAll.value.length <= 0"></base-empty>
-        <company-list v-else></company-list>
+        <!-- <base-empty v-if="getAll.length <= 0"></base-empty> -->
+        <company-list></company-list>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import CompanyList from "../components/company/CompanyList.vue";
-import CompanyAdd from "../components/company/CompanyAdd.vue";
-import * as modal from "../services/modalService";
-import { useCompanyService } from "../services/companyService";
-const companies = useCompanyService();
+// Komponenter
+import CompanyList from '../components/company/CompanyList.vue';
+import CompanyAdd from '../components/company/CompanyAdd.vue';
+
+// Service
+import * as modal from '../services/modalService';
 </script>

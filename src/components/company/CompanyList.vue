@@ -1,15 +1,15 @@
 <template>
   <company-item
-    v-for="company in companies.getAll.value"
+    v-for="company in getAll"
     :key="company.id"
     :company="company"
   ></company-item>
 </template>
 
 <script setup>
-import { useCompanyService } from "../../services/companyService";
-import CompanyItem from "./CompanyItem.vue"
+// Komponenter
+import CompanyItem from './CompanyItem.vue';
 
-const companies = useCompanyService();
-
+// Service
+import { getAll } from '../../services/companyService';
 </script>

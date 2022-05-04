@@ -1,13 +1,11 @@
 <template>
-  <button class="btn py-2 px-4" :class="btnClass">
-    {{ title }} &rarr;
-  </button>
+  <button class="btn" :class="{ ...btnClass }">{{ title }} &rarr;</button>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed } from 'vue';
 
-// eslint-disable-next-line no-unused-vars
+// Props
 const props = defineProps({
   cta: {
     type: Boolean,
@@ -18,6 +16,9 @@ const props = defineProps({
   outline: {
     type: Boolean,
   },
+  text: {
+    type: Boolean,
+  },
   small: {
     type: Boolean,
   },
@@ -26,12 +27,14 @@ const props = defineProps({
   },
 });
 
+// Button klasser basert på props
 const btnClass = computed(() => {
   return {
-    "btn--cta": props.cta,
-    "btn--warning": props.warning,
-    "btn--outline": props.outline,
-    "btn--small": props.small,
+    'btn--cta py-2 px-4': props.cta,
+    'btn--warning py-2 px-4': props.warning,
+    'btn--outline py-2 px-4': props.outline,
+    'btn--small py-2 px-4': props.small,
+    'btn--text': props.text,
   };
 });
 </script>

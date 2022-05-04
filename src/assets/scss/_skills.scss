@@ -1,8 +1,15 @@
-@use "variables";
+@use 'variables';
 
 .skill {
   border-radius: variables.$border-radius;
-  background: rgba($color: variables.$primary, $alpha: 0.1);
+  background: variables.$primary-tint;
   color: variables.$primary-shade;
   box-shadow: variables.$shadow-small-2;
+}
+
+.dark-mode {
+  .skill {
+    background: variables.$primary-shade;
+    color: variables.$primary-tint;
+  }
 }

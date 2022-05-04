@@ -1,7 +1,7 @@
-import axios from "axios";
-import { computed, ref } from "vue";
-import { API_URL, HOST } from "../config";
-import { deleteData, getData, postData, postImage, putData } from "../helpers";
+import axios from 'axios';
+import { computed, ref } from 'vue';
+import { API_URL, HOST } from '../config';
+import { deleteData, getData, postData, postImage, putData } from '../helpers';
 
 const data = ref([]);
 const developerUrl = `${API_URL}developer/`;
@@ -18,7 +18,7 @@ export const getDevelopers = async () => {
       assignment: dev.assignment,
       phone: dev.phone,
       email: dev.email,
-      skills: dev.skills?.split(",") || null,
+      skills: dev.skills?.split(',') || null,
       dateOfBirth: dev.dateOfBirth,
       image: `${HOST}src/img/developer/${dev.image}`,
     };
@@ -37,9 +37,9 @@ export const postDeveloper = async (developer, image) => {
     lastName: developer.lastName,
     phone: developer.phone,
     jobTitle: developer.jobTitle,
-    skills: developer.skills.join(","),
+    skills: developer.skills.join(','),
     dateOfBirth: developer.dateOfBirth,
-    image: image.get("file").name,
+    image: image.get('file').name,
   };
   await postData(developerUrl, newDeveloper);
   await postDeveloperImage(image);
@@ -53,19 +53,19 @@ export const putDeveloper = async (developer, image) => {
     lastName: developer.lastName,
     phone: developer.phone,
     jobTitle: developer.jobTitle,
-    skills: developer.skills.join(","),
+    skills: developer.skills.join(','),
     dateOfBirth: developer.dateOfBirth,
   };
   const currentImage = getOne(developer.id).value.image;
-  if (!image.get("file")) {
+  if (!image.get('file')) {
     editedDeveloper.image = currentImage.slice(
-      currentImage.lastIndexOf("/") + 1
+      currentImage.lastIndexOf('/') + 1
     );
   } else {
-    editedDeveloper.image = image.get("file").name;
+    editedDeveloper.image = image.get('file').name;
   }
   await putData(developerUrl, editedDeveloper);
-  if (image.get("file")) await postDeveloperImage(image);
+  if (image.get('file')) await postDeveloperImage(image);
   await getDevelopers();
 };
 
@@ -74,30 +74,30 @@ export const deleteDeveloper = async (id) => {
 };
 
 export const jobTitles = [
-  "Front-end utvikler",
-  "Back-end utvikler",
-  "Full-stack utvikler",
-  "Interaksjonsdesigner",
-  "Grafisk designer",
+  'Front-end utvikler',
+  'Back-end utvikler',
+  'Full-stack utvikler',
+  'Interaksjonsdesigner',
+  'Grafisk designer',
 ];
 
 export const skills = [
-  "JavaScript",
-  "Vue",
-  "React",
-  "Angular",
-  "Node",
-  "Express",
-  "MongoDB",
-  "Sass",
-  "CSS",
-  "TypeScript",
-  "C#",
-  ".NET",
-  "Java",
-  "Scrum",
-  "Figma",
-  "MySQL",
+  'JavaScript',
+  'Vue',
+  'React',
+  'Angular',
+  'Node',
+  'Express',
+  'MongoDB',
+  'Sass',
+  'CSS',
+  'TypeScript',
+  'C#',
+  '.NET',
+  'Java',
+  'Scrum',
+  'Figma',
+  'MySQL',
 ];
 
 export const getAll = computed(() => data.value);
@@ -108,7 +108,8 @@ export const getOne = (id) =>
 export const fullName = (developer) =>
   computed(() => `${developer.firstName} ${developer.lastName}`);
 
-export const dateOfBirth = (developer) => computed(()=> new Date(developer.dateOfBirth).toLocaleDateString("no-NB"))
+export const dateOfBirth = (developer) =>
+  computed(() => new Date(developer.dateOfBirth).toLocaleDateString('no-NB'));
 
 export const getAvailableDevelopers = computed(() =>
   data.value.filter((developer) => !developer.assignment)
@@ -128,15 +129,20 @@ export const removeAssignmentFromDeveloper = async (id) => {
   await getDevelopers();
 };
 
+export const numberOfDevs = computed(() => data.value.length);
+
+export const devsOnAssignment = computed(() =>
+  data.value.filter((dev) => dev.assignment).length
+);
 
 export const developerAvailable = (developer) => {
   return computed(() => {
     return !developer.assignment
       ? {
-          class: { "availability--available": true },
-          text: "Ledig for oppdrag",
+          class: { 'availability--available': true },
+          text: 'Ledig for oppdrag',
         }
-      : { class: { "availability--unavailable": true }, text: "På oppdrag" };
+      : { class: { 'availability--unavailable': true }, text: 'På oppdrag' };
   }).value;
 };
 

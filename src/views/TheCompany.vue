@@ -8,61 +8,51 @@
       <CompanyEdit :id="company.id" />
     </BaseModal>
     <BaseModal
-      :show="modal.confirmModalVisible.value"
+      :show="modal.deleteModalVisible.value"
       confirm
-      @close="modal.toggleConfirmModal"
+      @close="modal.toggleDeleteModal"
       ><CompanyDelete :id="company.id" />
     </BaseModal>
-    <div class="profile">
-      <div class="container">
-        <div class="row mb-4">
-          <BaseBack to="/kunder" title="Kunder" />
-        </div>
-        <div class="row p-4">
-          <div
-            class="col-12 col-xs-12 col-md-12 col-lg-6 col-xl-4 d-flex justify-content-center"
-          >
-            <BaseImage :src="company.image" :alt="company.name" />
-          </div>
-          <div class="col-12 col-lg-6">
-            <h1 class="fw-bold mb-2 h2">
-              {{ company.name }}
-            </h1>
 
-            <div class="d-flex gap-3 mb-5">
-              <BaseButton cta @click="modal.toggleFormModal" title="Rediger" />
-              <BaseButton
-                warning
-                @click="modal.toggleConfirmModal"
-                title="Slett"
-              />
-            </div>
-          </div>
+    <div class="row mb-4 px-4">
+      <BaseBack to="/kunder" title="Kunder" />
+    </div>
+
+    <div class="row gap-4 px-4">
+      <BaseSingle large>
+        <div class="col col-lg-4">
+          <BaseImage :src="company.image" :alt="company.name" />
         </div>
-      </div>
+        <div class="col">
+          <CompanyDetails :company="company" />
+        </div>
+      </BaseSingle>
+      <BaseSingle small>
+        <h3>Handlinger</h3>
+        <BaseButton text @click="modal.toggleFormModal" title="Rediger" />
+        <BaseButton text @click="modal.toggleDeleteModal" title="Slett" />
+      </BaseSingle>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineAsyncComponent } from "@vue/runtime-core";
-import { useCompanyService } from "../services/companyService";
-import * as modal from "../services/modalService";
-const CompanyEdit = defineAsyncComponent(() =>
-  import("../components/company/CompanyEdit.vue")
-);
-const CompanyDelete = defineAsyncComponent(() =>
-  import("../components/company/CompanyDelete.vue")
-);
+// Komponenter
+import CompanyEdit from '../components/company/CompanyEdit.vue';
+import CompanyDelete from '../components/company/CompanyDelete.vue';
+import CompanyDetails from '../components/company/CompanyDetails.vue';
 
+// Service
+import { getOne } from '../services/companyService';
+import { getAssignmentsFromCompany } from '../services/assigmentService';
+import * as modal from '../services/modalService';
+
+// Props
 const props = defineProps({
   id: {
     type: String,
   },
 });
 
-const companies = useCompanyService();
-const company = companies.getOne(+props.id);
-console.log(company);
-
+const company = getOne(+props.id);
 </script>

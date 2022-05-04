@@ -8,68 +8,77 @@
       <DeveloperEdit :id="developer.id" />
     </BaseModal>
     <BaseModal
-      :show="modal.confirmModalVisible.value"
+      :show="modal.deleteModalVisible.value"
       confirm
-      @close="modal.toggleConfirmModal"
+      @close="modal.toggleDeleteModal"
     >
       <DeveloperDelete :id="developer.id" />
     </BaseModal>
-    <div class="profile">
-      <div class="container">
-        <div class="row mb-4">
-          <BaseBack to="/utviklere" title="Utviklere" />
+
+    <div class="row mb-4 px-4">
+      <BaseBack to="/utviklere" title="Utviklere" />
+    </div>
+
+    <div class="row gap-4 px-4">
+      <BaseSingle large>
+        <div class="col-12 col-lg-4 mb-4">
+          <BaseImage :src="developer.image" :alt="fullName(developer).value" />
         </div>
-        <div class="row p-4">
-          <div
-            class="col-12 col-xs-12 col-md-12 col-lg-6 col-xl-4 d-flex justify-content-center"
-          >
-            <BaseImage
-              :src="developer.image"
-              :alt="fullName(developer).value"
+        <div class="col">
+          <div class="d-flex pb-4">
+            <DeveloperAvailability :developer="developer" />
+          </div>
+          <DeveloperDetails :developer="developer" />
+          <h5 class="mb-4">Ferdigheter</h5>
+          <div class="d-flex gap-3 flex-wrap">
+            <DeveloperSkill
+              v-for="skill in developer.skills"
+              :key="skill"
+              :skill="skill"
             />
           </div>
-          <div class="col-12 col-lg-6">
-            <div class="row">
-              <div class="col d-flex mb-4">
-                <DeveloperAvailability :developer="developer" />
-              </div>
-            </div>
-            <DeveloperDetails :developer="developer" />
-            <div class="row">
-              <h5 class="mb-3">Ferdigheter:</h5>
-              <div class="col d-flex gap-3 mb-5 flex-wrap">
-                <DeveloperSkill
-                  v-for="skill in developer.skills"
-                  :key="skill"
-                  :skill="skill"
-                />
-              </div>
-            </div>
-            <div class="d-flex gap-3 mb-5">
-              <BaseButton cta @click="modal.toggleFormModal" title="Rediger" />
-              <BaseButton
-                warning
-                @click="modal.toggleConfirmModal"
-                title="Slett"
-              />
-            </div>
-          </div>
         </div>
-      </div>
+      </BaseSingle>
+
+      <BaseSingle small>
+        <h3>Handlinger</h3>
+        <div class="col">
+          <BaseButton
+            class="w-100"
+            text
+            @click="modal.toggleFormModal"
+            title="Rediger"
+          />
+        </div>
+        <div>
+          <BaseButton
+            class="w-100"
+            text
+            @click="modal.toggleDeleteModal"
+            title="Slett"
+          />
+        </div>
+      </BaseSingle>
     </div>
   </div>
 </template>
 
 <script setup>
+// Vue
+import { computed } from 'vue';
+
+// Komponenter
 import DeveloperSkill from '../components/developer/DeveloperSkill.vue';
 import DeveloperDetails from '../components/developer/DeveloperDetails.vue';
-import { getOne, fullName} from '../services/developerService';
-import * as modal from '../services/modalService';
 import DeveloperEdit from '../components/developer/DeveloperEdit.vue';
-import { computed } from '@vue/runtime-core';
 import DeveloperAvailability from '../components/developer/DeveloperAvailability.vue';
 import DeveloperDelete from '../components/developer/DeveloperDelete.vue';
 
+// Service
+import { getOne, fullName } from '../services/developerService';
+import * as modal from '../services/modalService';
+
+// Props
 const props = defineProps({
   id: {
     type: String,

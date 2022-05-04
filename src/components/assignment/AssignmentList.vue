@@ -7,7 +7,9 @@
 </template>
 
 <script setup>
-import { getAll } from "../../services/assigmentService";
-import AssignmentItem from "./AssignmentItem.vue";
-// const assignments = useAssignmentService();
+// Komponenter
+import AssignmentItem from './AssignmentItem.vue';
+
+// Service
+import { getAll } from '../../services/assigmentService';
 </script>

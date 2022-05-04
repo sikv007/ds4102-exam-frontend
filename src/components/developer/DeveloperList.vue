@@ -13,8 +13,10 @@
 </template>
 
 <script setup>
-import DeveloperItem from "./DeveloperItem.vue";
+// Komponenter
+import DeveloperItem from './DeveloperItem.vue';
 
+// Props
 const props = defineProps({
   data: {
     type: Object,
@@ -30,9 +32,11 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["event"]);
+// Emits
+const emit = defineEmits(['event']);
 
+// Emitter event fra knapp når komponenten vises som en liste
 const emitEvent = (id) => {
-  emit("event", id);
+  emit('event', id);
 };
 </script>

@@ -12,7 +12,6 @@ const props = defineProps({
 });
 
 const iconClass = computed(() => {
-  console.log(props.icon);
   if (props.icon === 'alert') return { 'bi-exclamation-circle': true };
   if (props.icon === 'mail')
     return {
@@ -23,6 +22,10 @@ const iconClass = computed(() => {
       'bi-telephone-fill': true,
     };
   if (props.icon === 'calendar') return { 'bi-calendar-fill': true };
+  if (props.icon === 'person') return { 'bi-person-fill': true };
+  if (props.icon === 'moon') return { 'bi-moon-fill': true };
+  if (props.icon === 'sun') return { 'bi-brightness-high-fill': true };
+  if (props.icon === 'cancel') return { 'bi-x-lg': true };
   else return { '': true };
 });
 </script>

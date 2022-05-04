@@ -1,4 +1,4 @@
-@use "variables";
+@use 'variables';
 
 .btn {
   border-radius: variables.$border-radius;
@@ -6,14 +6,14 @@
   color: variables.$background-light-3;
   transition: variables.$transition;
   display: inline-block;
-  
+
   &--cta {
     background: variables.$primary;
     &:hover {
       background: darken(variables.$primary, 10%);
     }
   }
-  
+
   &--outline {
     background: none;
     border: 1px solid variables.$primary;
@@ -27,12 +27,32 @@
     }
   }
 
+  &--text {
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid variables.$background-light-2;
+    color: variables.$primary;
+    padding: 16px 0;
+    text-align: left;
+    font-weight: 500;
+  }
+
   &--small {
     font-size: 0.8rem;
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     // box-shadow: variables.$shadow-small;
+  }
+}
+
+.dark-mode {
+  .btn {
+    &--text {
+      border-bottom: 1px solid variables.$background-dark-2;
+      color: variables.$background-light-3;
+    }
   }
 }

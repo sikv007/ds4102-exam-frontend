@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+// Service
 import { postInvoice } from '../../services/invoiceService';
 import {
   getOne,
@@ -24,6 +25,7 @@ import * as modal from '../../services/modalService';
 import { useRouter } from 'vue-router';
 import { removeAssignmentFromDeveloper } from '../../services/developerService';
 
+// Props
 const props = defineProps({
   id: {
     type: Number,
@@ -34,10 +36,9 @@ const router = useRouter();
 
 const assignment = getOne(props.id).value;
 
-console.log(assignment);
-
-
+// Submit skjema
 const submitForm = async () => {
+  // Opprett faktura objekt når et oppdrag er fullført
   const assignmentData = {
     company: assignment.company,
     product: assignment.name,
@@ -46,6 +47,8 @@ const submitForm = async () => {
   };
 
   modal.confirmModalVisible.value = false;
+
+  // Fjern utviklere fra oppdrag når det er fullført
   if (assignment.team) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     assignment.team.forEach(async (developer) => {
@@ -53,9 +56,12 @@ const submitForm = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
     });
   }
+  
   await new Promise((resolve) => setTimeout(resolve, 1000));
   await deleteAssignment(assignment.id);
+
   router.back();
+
   await getAssignments();
 
   await postInvoice(assignmentData);

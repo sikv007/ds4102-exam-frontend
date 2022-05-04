@@ -1,22 +1,29 @@
 <template>
-  <company-form
+  <CompanyForm
     title="Rediger kunde"
     button="Lagre"
-    @submit-form="submitForm"
     :id="id"
+    @submit-form="submitForm"
+    @close-form="modal.toggleFormModal"
   />
 </template>
 
 <script setup>
-import { useCompanyService } from "../../services/companyService";
-import CompanyForm from "./CompanyForm.vue";
+// Komponenter
+import CompanyForm from './CompanyForm.vue';
 
+// Servides
+import { putCompany } from '../../services/companyService';
+import * as modal from '../../services/modalService';
+
+// Props
 const props = defineProps({
   id: Number,
 });
-const companies = useCompanyService();
 
+// Submit skjema
 const submitForm = async (data, image) => {
-  await companies.putCompany(data, image);
+  await putCompany(data, image);
+  modal.toggleFormModal();
 };
 </script>

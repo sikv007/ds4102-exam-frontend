@@ -10,7 +10,7 @@
     <BaseModal
       :show="modal.deleteModalVisible.value"
       confirm
-      @close="modal.toggDeleteModal"
+      @close="modal.toggleDeleteModal"
     >
       <AssignmentDelete :id="assignment.id" />
     </BaseModal>
@@ -21,50 +21,40 @@
     >
       <AssignmentComplete :id="assignment.id" />
     </BaseModal>
-    <div class="row gap-4">
-      <BaseBack to="/oppdrag" title="Oppdrag" />
-      <div class="col single">
-        <div class="container">
-          <div class="row p-5">
-            <div class="col">
-              <h1 class="fw-bold mb-2 h2">
-                {{ assignment.title }}
-              </h1>
-              <h4 class="mb-5">{{ assignment.company }}</h4>
-              <p>{{ company.contactName }}</p>
-              <p>{{ price(assignment.price).value }}</p>
-              <p class="mb-5">{{ company.contactEmail }}</p>
-            </div>
-            <div class="col">
-              <BaseImage :src="company.image" :alt="company.name" />
-            </div>
-            <div class="row">
-              <div class="col-12 position-relative">
-                <h5 class="mb-2 fw-bold">Utviklere på dette oppdraget</h5>
-                <BaseAlert
-                  v-if="
-                    getDevelopersFromAssignment(assignment.id).value.length ===
-                    0
-                  "
-                  message="Fant ingen utviklere knyttet til dette oppdraget"
-                />
-                <DeveloperList
-                  list
-                  :data="getDevelopersFromAssignment(assignment.id).value"
-                  @event="removeAssignment"
-                  button-text="Fjern fra oppdrag"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-12 col-lg-3 single p-5">
+    <div class="row mb-4 px-4">
+      <BaseBack to="/oppdrag" title="Oppdrag" />
+    </div>
+
+    <div class="row gap-4 px-4">
+      <BaseSingle large>
+        <div class="col-12 col-lg-4 mb-4">
+          <BaseImage :src="company.image" :alt="company.name" />
+        </div>
+        <div class="col mb-4">
+          <AssignmentDetails :assignment="assignment" :company="company" />
+        </div>
+        <div class="col-12 position-relative">
+          <h5 class="mb-2">Utviklere på dette oppdraget</h5>
+          <BaseAlert
+            v-if="getDevelopersFromAssignment(assignment.id).value.length === 0"
+            message="Fant ingen utviklere knyttet til dette oppdraget"
+          />
+          <DeveloperList
+            list
+            :data="getDevelopersFromAssignment(assignment.id).value"
+            @event="removeAssignment"
+            button-text="Fjern fra oppdrag"
+          />
+        </div>
+      </BaseSingle>
+
+      <BaseSingle small>
+        <h3>Handlinger</h3>
         <div class="col">
           <BaseButton
             class="w-100"
-            cta
+            text
             @click="modal.toggleFormModal"
             title="Rediger"
           />
@@ -72,20 +62,20 @@
         <div>
           <BaseButton
             class="w-100"
-            warning
+            text
             @click="modal.toggleDeleteModal"
             title="Slett"
           />
         </div>
         <BaseButton
           class="w-100"
-          warning
+          text
           @click="modal.toggleConfirmModal"
-          title="Marker oppdrag som fullført"
+          title="Marker som fullført"
         />
-      </div>
+      </BaseSingle>
 
-      <div class="col-12 single p-5">
+      <BaseSingle class="position-relative">
         <h5 class="mb-4 fw-bold">Ledige utviklere</h5>
         <BaseAlert
           v-if="getAvailableDevelopers.length === 0"
@@ -97,7 +87,7 @@
           @event="addAssignment"
           button-text="Legg til i oppdrag"
         />
-      </div>
+      </BaseSingle>
     </div>
   </section>
 </template>
@@ -108,9 +98,10 @@ import DeveloperList from '../components/developer/DeveloperList.vue';
 import AssignmentEdit from '../components/assignment/AssignmentEdit.vue';
 import AssignmentDelete from '../components/assignment/AssignmentDelete.vue';
 import AssignmentComplete from '../components/assignment/AssignmentComplete.vue';
+import AssignmentDetails from '../components/assignment/AssignmentDetails.vue';
 
 // Services
-import { useCompanyService } from '../services/companyService';
+import { findCompanyByAssignment } from '../services/companyService';
 import * as modal from '../services/modalService';
 import {
   getOne,
@@ -125,16 +116,17 @@ import {
   getDevelopersFromAssignment,
 } from '../services/developerService';
 
+// Props
 const props = defineProps({
   id: {
     type: String,
   },
 });
 
-const companies = useCompanyService();
 const assignment = getOne(+props.id);
-const company = companies.findCompanyByAssignment(assignment);
+const company = findCompanyByAssignment(assignment);
 
+// Legg utvikler til oppdrag
 const addAssignment = async (id) => {
   console.log(id);
   console.log(assignment);
@@ -142,6 +134,7 @@ const addAssignment = async (id) => {
   await addDeveloperToAssignment(id, assignment.value);
 };
 
+// Fjern utvikler fra oppdrag
 const removeAssignment = async (id) => {
   await removeDeveloperFromAssignment(id, assignment.value);
   await removeAssignmentFromDeveloper(id, assignment.value);

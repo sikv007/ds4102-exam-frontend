@@ -3,12 +3,10 @@
 </template>
 
 <script setup>
-
-// eslint-disable-next-line no-unused-vars
+// Props
 const props = defineProps({
   skill: {
     type: String,
   },
 });
-
 </script>

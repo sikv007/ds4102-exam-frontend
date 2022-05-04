@@ -1,6 +1,6 @@
 <template>
-  <DeveloperForm
-    title="Rediger utvikler"
+  <InvoiceForm
+    title="Rediger faktura"
     button="Lagre"
     :id="id"
     @submit-form="submitForm"
@@ -10,10 +10,10 @@
 
 <script setup>
 // Komponenter
-import DeveloperForm from './DeveloperForm.vue';
+import InvoiceForm from './InvoiceForm.vue';
 
 // Service
-import { putDeveloper } from '../../services/developerService';
+import { putInvoice } from '../../services/invoiceService';
 import * as modal from '../../services/modalService';
 
 // Props
@@ -22,8 +22,8 @@ const props = defineProps({
 });
 
 // Submit skjema
-const submitForm = async (data, image) => {
-  await putDeveloper(data, image);
+const submitForm = async (data) => {
+  await putInvoice(data);
   modal.toggleFormModal();
 };
 </script>

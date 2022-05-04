@@ -8,16 +8,22 @@
       </p>
       <div class="col d-flex gap-4">
         <BaseButton warning @click="submitForm" title="Bekreft" />
-        <BaseButton outline @click="modal.toggleConfirmModal" title="Avbryt" />
+        <BaseButton outline @click="modal.toggleDeleteModal" title="Avbryt" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useCompanyService } from '../../services/companyService';
-import * as modal from '../../services/modalService';
 import { useRouter } from 'vue-router';
+
+// Service
+import {
+  getOne,
+  getCompanies,
+  deleteCompany,
+} from '../../services/companyService';
+import * as modal from '../../services/modalService';
 import {
   getAssignmentsFromCompany,
   getAssignments,
@@ -25,6 +31,7 @@ import {
 } from '../../services/assigmentService';
 import { removeAssignmentFromDeveloper } from '../../services/developerService';
 
+// Props
 const props = defineProps({
   id: {
     type: Number,
@@ -32,26 +39,26 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const companies = useCompanyService();
 
+// Submit skjema
 const submitForm = async () => {
-  const company = companies.getOne(props.id).value;
+  const company = getOne(props.id).value;
   const assignment = getAssignmentsFromCompany(company).value;
 
-  // Slett utviklere fra oppdrag knyttet til bedriften om oppdrag eksisterer
+  // Fjern utviklere fra oppdrag knyttet til bedriften om oppdrag eksisterer slik at de blir ledig for nye oppdrag
   if (assignment.value) {
     assignment.forEach((assignment) => {
-      assignment.team.forEach(async developer => {
+      assignment.team.forEach(async (developer) => {
         await removeAssignmentFromDeveloper(+developer);
       });
     });
   }
 
   await deleteAssignmentsFromCompany(company);
-  await companies.deleteCompany(props.id);
+  await deleteCompany(props.id);
   router.back();
-  await companies.getCompanies();
+  await getCompanies();
   await getAssignments();
-  modal.confirmModalVisible.value = false;
+  modal.toggleDeleteModal();
 };
 </script>

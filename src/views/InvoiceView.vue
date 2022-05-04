@@ -34,8 +34,11 @@
 </template>
 
 <script setup>
+// Komponenter
 import InvoiceList from '../components/invoice/InvoiceList.vue';
 import InvoiceAdd from '../components/invoice/InvoiceAdd.vue';
+
+// Service
 import * as modal from '../services/modalService';
 import { getAll } from '../services/invoiceService';
 import { error } from '../services/appService';

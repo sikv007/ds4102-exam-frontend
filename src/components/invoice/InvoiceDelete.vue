@@ -13,10 +13,7 @@
 
 <script setup>
 // Service
-import {
-  deleteDeveloper,
-  getDevelopers,
-} from '../../services/developerService';
+import { deleteInvoice, getInvoices } from '../../services/invoiceService';
 import * as modal from '../../services/modalService';
 import { useRouter } from 'vue-router';
 
@@ -31,9 +28,9 @@ const router = useRouter();
 
 // Submit skjema
 const submitForm = async () => {
-  await deleteDeveloper(props.id);
+  await deleteInvoice(props.id);
   router.back();
-  await getDevelopers();
+  await getInvoices();
   modal.toggleDeleteModal();
 };
 </script>

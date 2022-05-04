@@ -1,18 +1,43 @@
-@use "variables";
+@use 'variables';
 
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
-@import "../../../node_modules/bootstrap/scss/mixins";
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
 
-nav {
+.navigation {
   width: 90vw;
   height: 100vh;
+  position: relative;
   background: variables.$background-light-3;
   position: fixed;
   z-index: 2;
   top: 0;
   left: 0;
   box-shadow: variables.$shadow-large;
+
+  &.dark-mode {
+    background: variables.$background-dark-3;
+    a {
+      color: variables.$primary-tint;
+      &:hover {
+        color: variables.$primary;
+      }
+    }
+  }
+
+  .close-nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    transition: variables.$transition-bezier;
+
+    &:hover {
+      transform: scale(1.2) rotate(90deg);
+    }
+  }
 }
 
 .navigation-overlay {
@@ -25,8 +50,8 @@ nav {
   left: 0;
 }
 
-  @include media-breakpoint-up(md) {
-    nav {
-      width: 50vw;
-    }
+@include media-breakpoint-up(md) {
+  .navigation {
+    width: 50vw;
   }
+}

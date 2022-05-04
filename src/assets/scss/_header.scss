@@ -1,8 +1,9 @@
-@use "variables";
+@use 'variables';
 
-header {
+.header {
   background-color: variables.$background-light-3;
   box-shadow: variables.$shadow-small;
+  transition: variables.$transition;
 
   .hamburger {
     border: 0;
@@ -10,13 +11,13 @@ header {
     background: none;
     line-height: 0.8;
     cursor: pointer;
-    
+
     span {
       background-color: variables.$primary-shade;
       height: 4px;
       width: 100%;
       display: inline-block;
-      transition: variables.$transition;
+      transition: variables.$transition-bezier;
       border-radius: 2px;
     }
 
@@ -25,7 +26,25 @@ header {
         background-color: variables.$primary;
       }
       span:nth-child(2) {
-       transform: translateX(8px);
+        transform: translateX(8px);
+      }
+    }
+  }
+}
+
+.dark-mode {
+  .header {
+    background-color: variables.$background-dark-3;
+
+    .hamburger {
+      span {
+        background-color: variables.$primary-tint;
+      }
+
+      &:hover {
+        span {
+          background-color: variables.$primary;
+        }
       }
     }
   }

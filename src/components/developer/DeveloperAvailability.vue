@@ -12,7 +12,8 @@
       <span class="availability-circle--inner"></span>
     </span>
   </span>
-  <span v-else
+  <span
+    v-else
     class="availability"
     :class="{
       ...developerAvailable(developer).class,
@@ -29,9 +30,11 @@
 </template>
 
 <script setup>
-import { computed } from "@vue/runtime-core";
-import { developerAvailable } from "../../services/developerService";
+// Service
+import { computed } from '@vue/runtime-core';
+import { developerAvailable } from '../../services/developerService';
 
+// Props
 const props = defineProps({
   developer: {
     type: Object,
@@ -44,10 +47,10 @@ const props = defineProps({
   },
 });
 
+// Klasser for å vise om utvikler er på oppdrag eller ikke i forskjellige størrelser
 const availabilityClass = computed(() => {
-  if (props.small) return { "availability--small": true };
-  if (props.preview) return { "availability--preview": true };
-  else return { "availability--large": true };
+  if (props.small) return { 'availability--small': true };
+  if (props.preview) return { 'availability--preview': true };
+  else return { 'availability--large': true };
 });
-
 </script>

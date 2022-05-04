@@ -1,32 +1,47 @@
 import axios from 'axios';
 import { getAssignments } from './services/assigmentService';
-import { useCompanyService } from './services/companyService';
+import { getCompanies } from './services/companyService';
 import { getDevelopers } from './services/developerService';
 import { getInvoices } from './services/invoiceService';
 import { setError } from './services/appService';
 
+// Initialiser applikasjonen ved å hente inn data
 export const init = async () => {
   try {
-    const companies = useCompanyService();
     await getDevelopers();
     await getInvoices();
-    await companies.getCompanies();
+    await getCompanies();
     await getAssignments();
-  } catch(err) {
+  } catch (err) {
     setError(true, err.message);
-    console.error(err)
+    console.error(err);
   }
 };
 
+// Generisk funksjon for GET requests
 export const getData = async (url) => {
   const res = await axios.get(url);
   return res.data;
 };
 
+// Generisk funksjon for POST requests
 export const postData = async (url, payload) => {
   await axios.post(url, payload);
 };
 
+/**
+ * Generisk funksjon for PUT Requests
+ */
+export const putData = async (url, payload) => {
+  await axios.put(url, payload);
+};
+
+// Generisk funksjon for DELETE Requests
+export const deleteData = async (url) => {
+  await axios.delete(url);
+};
+
+// Generisk funksjon for Bildeopplasting
 export const postImage = async (url, payload) => {
   await axios({
     method: 'POST',
@@ -34,12 +49,4 @@ export const postImage = async (url, payload) => {
     data: payload,
     config: { header: { 'Content-Type': 'multipart/form-data' } },
   });
-};
-
-export const putData = async (url, payload) => {
-  await axios.put(url, payload);
-};
-
-export const deleteData = async (url) => {
-  await axios.delete(url);
 };

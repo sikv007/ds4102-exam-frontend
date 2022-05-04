@@ -1,23 +1,45 @@
-@use "variables";
+@use 'variables';
 
 .logo {
   display: flex;
   align-items: center;
   gap: 8px;
-  
+
   .logo-icon {
     fill: variables.$primary;
-    height: 32px;
+    height: 28px;
   }
   .logo-letter {
     fill: variables.$primary-shade;
     transition: variables.$transition;
-    height: 28px;
+    height: 24px;
   }
-  
+
   &:hover {
     .logo-letter {
       fill: variables.$primary;
+    }
+  }
+}
+
+.dark-mode {
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo-icon {
+      fill: variables.$primary;
+      height: 28px;
+    }
+    .logo-letter {
+      fill: variables.$primary-tint;
+    }
+
+    &:hover {
+      .logo-letter {
+        fill: variables.$primary;
+      }
     }
   }
 }

@@ -1,21 +1,31 @@
-@use "variables";
+@use 'variables';
 
 .card {
   background-color: variables.$background-light-3;
   border: 1px solid variables.$background-light-2;
-  border-radius: variables.$border-radius;
-  // transition: variables.$transition;
+  border-radius: variables.$border-radius-large;
+  transition: variables.$transition;
   position: relative;
 
+  span,h2,a {
+    transition: none;
+  }
+  
   .h6 {
     color: variables.$primary;
   }
-
+  
   &:hover {
     transform: scale(1.05);
     img {
       transform: scale(1.2);
-      
     }
+  }
+}
+
+.dark-mode {
+  .card {
+    background-color: variables.$background-dark-3;
+    border: 1px solid variables.$background-dark-1;
   }
 }

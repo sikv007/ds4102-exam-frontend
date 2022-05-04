@@ -14,7 +14,7 @@
         >
           <h1 class="fw-bold">Oppdrag</h1>
           <BaseButton
-            v-if="companies.getAll.value.length > 0"
+            v-if="numberOfCompanies > 0"
             cta
             @click="modal.toggleFormModal"
             title="Legg til oppdrag"
@@ -28,11 +28,11 @@
         <!-- <BaseEmpty
           v-if="companies.getAll.value.length === 0"
           title="For å kunne legge til oppdrag må du først legge til en kunde."
-        />
-        <BaseEmpty
-          v-else-if="assignments.value.length === 0"
-          title="Fant ingen oppdrag."
         /> -->
+        <BaseEmpty
+          v-if="assignments.length === 0"
+          title="Fant ingen oppdrag."
+        />
         <AssignmentList />
       </div>
     </div>
@@ -40,10 +40,12 @@
 </template>
 
 <script setup>
-import AssignmentList from "../components/assignment/AssignmentList.vue";
-import AssignmentAdd from "../components/assignment/AssignmentAdd.vue";
-import * as modal from "../services/modalService";
-import { getAll as assignments } from "../services/assigmentService";
-import { useCompanyService } from "../services/companyService";
-const companies = useCompanyService();
+// Komponenter
+import AssignmentList from '../components/assignment/AssignmentList.vue';
+import AssignmentAdd from '../components/assignment/AssignmentAdd.vue';
+
+// Service
+import * as modal from '../services/modalService';
+import { getAll as assignments } from '../services/assigmentService';
+import { numberOfCompanies } from '../services/companyService';
 </script>

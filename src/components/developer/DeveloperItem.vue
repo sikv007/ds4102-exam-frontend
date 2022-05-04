@@ -29,7 +29,7 @@
     </router-link>
     <BaseButton
       class="ms-auto"
-      outline
+      cta
       small
       @click="emitEvent"
       :title="buttonText"
@@ -38,9 +38,11 @@
 </template>
 
 <script setup>
-import { fullName } from "../../services/developerService";
-import DeveloperAvailability from "./DeveloperAvailability.vue";
+// Service
+import { fullName } from '../../services/developerService';
+import DeveloperAvailability from './DeveloperAvailability.vue';
 
+// Props
 const props = defineProps({
   developer: {
     type: Object,
@@ -56,9 +58,11 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["event"]);
+// Emits
+const emit = defineEmits(['event']);
 
+// Emitter event fra knapp når komponenten vises som en liste
 const emitEvent = () => {
-  emit("event", props.developer.id);
+  emit('event', props.developer.id);
 };
 </script>

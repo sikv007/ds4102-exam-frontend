@@ -13,6 +13,7 @@
 @use 'list';
 @use 'single';
 @use 'icon';
+@use 'toggle';
 
 
 // @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
@@ -55,7 +56,7 @@ strong {
 }
 
 hr {
-  border: 2px solid variables.$background-light-2;
+  border: 1px solid variables.$background-light-2;
 }
 
 .nav-link {
@@ -72,4 +73,9 @@ hr {
   color: variables.$primary-shade;
   min-height: 100vh;
   transition: variables.$transition;
+  
+  &.dark-mode {    
+    background-color: variables.$background-dark-1;
+    color: variables.$primary-tint;
+  }
 }

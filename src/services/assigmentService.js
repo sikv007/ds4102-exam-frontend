@@ -22,11 +22,10 @@ export const getAssignments = async () => {
       completed: el.completed,
     };
     if (assignment.team && assignment.team[0] === '') {
-      assignment.team = null
+      assignment.team = null;
     }
     assignments.push(assignment);
   });
-  console.log(assignments);
   data.value = assignments;
 };
 
@@ -43,7 +42,6 @@ export const postAssignment = async (assignment) => {
 
 export const putAssignment = async (assignment) => {
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
-  console.log(currentAssignment);
 
   const editedAssignment = {
     id: assignment.id,
@@ -54,8 +52,6 @@ export const putAssignment = async (assignment) => {
     team: currentAssignment.team,
     completed: currentAssignment.completed,
   };
-
-  console.log(editedAssignment);
 
   await putData(assignmentUrl, editedAssignment);
   await getAssignments();
@@ -93,7 +89,6 @@ export const removeDeveloperFromAssignment = async (
   developerId,
   assignment
 ) => {
-  console.log(assignment);
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
   currentAssignment.team = currentAssignment.team.split(',');
   currentAssignment.team.splice(
@@ -107,6 +102,8 @@ export const removeDeveloperFromAssignment = async (
 
 export const price = (price) =>
   computed(() => new Intl.NumberFormat('nb-NO').format(price));
+
+export const numberOfAssignments = computed(() => data.value.length);
 
 export const getAssignmentsFromCompany = (company) =>
   computed(() =>

@@ -1,8 +1,8 @@
-@use "variables";
+@use 'variables';
 
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/variables";
-@import "../../../node_modules/bootstrap/scss/mixins";
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
 
 .modal {
   overflow: scroll;
@@ -13,13 +13,24 @@
   background: variables.$background-light-3;
   box-shadow: variables.$shadow-large;
   border-radius: variables.$border-radius;
+  color: variables.$primary-shade;
+
+  &.dark-mode {
+    background: variables.$background-dark-3;
+    color: variables.$primary-tint;
+
+    input,select {
+      background: variables.$background-dark-3;
+      border-color: variables.$background-dark-2;
+      color: variables.$primary-tint;
+    }
+  }
 }
 
 .modal--form {
   width: 100vw;
   height: 100vh;
 }
-
 
 .modal-open {
   transform: translate(-50%, -50%) scale(1);
@@ -35,9 +46,9 @@
   left: 0;
 }
 
-  @include media-breakpoint-up(lg) {
-    .modal--form {
-      width: 60vw;
-      height: auto;
-    }
+@include media-breakpoint-up(lg) {
+  .modal--form {
+    width: 60vw;
+    height: auto;
   }
+}

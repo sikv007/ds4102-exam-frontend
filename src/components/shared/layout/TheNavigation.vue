@@ -4,54 +4,59 @@
       <div v-if="show" class="navigation-overlay"></div>
     </Transition>
     <Transition name="nav" mode="out-in">
-      <nav v-if="show">
+      <nav class="navigation" :class="isDarkMode" v-if="show">
         <div class="container py-5 px-5">
-          <base-logo class="pb-5" @click="close"></base-logo>
+          <BaseLogo class="pb-5" @click="close" />
           <ul class="nav flex-column h3">
             <li class="nav-item">
-              <router-link to="/" class="nav-link px-0" @click="close"
-                >Dashboard</router-link
+              <RouterLink to="/" class="nav-link px-0" @click="close"
+                >Dashboard</RouterLink
               >
             </li>
             <li class="nav-item">
-              <router-link to="/utviklere" class="nav-link px-0" @click="close"
-                >Utviklere</router-link
+              <RouterLink to="/utviklere" class="nav-link px-0" @click="close"
+                >Utviklere</RouterLink
               >
             </li>
             <li class="nav-item">
-              <router-link to="/oppdrag" class="nav-link px-0" @click="close"
-                >Oppdrag</router-link
+              <RouterLink to="/oppdrag" class="nav-link px-0" @click="close"
+                >Oppdrag</RouterLink
               >
             </li>
             <li class="nav-item">
-              <router-link to="/kunder" class="nav-link px-0" @click="close"
-                >Kunder</router-link
+              <RouterLink to="/kunder" class="nav-link px-0" @click="close"
+                >Kunder</RouterLink
               >
             </li>
             <li class="nav-item">
-              <router-link to="/faktura" class="nav-link px-0" @click="close"
-                >Faktura</router-link
+              <RouterLink to="/faktura" class="nav-link px-0" @click="close"
+                >Faktura</RouterLink
               >
             </li>
           </ul>
           <hr />
-          <button @click="close">Close</button>
         </div>
+        <button class="close-nav" @click="close">
+          <BaseIcon icon="cancel" />
+        </button>
       </nav>
     </Transition>
   </Teleport>
 </template>
 
 <script setup>
+// Service
+import { isDarkMode } from '../../../services/darkModeService';
+
+// Props
 const props = defineProps({
   show: {
     type: Boolean,
   },
 });
 
+// Emits
 const emit = defineEmits(['close']);
 
-const close = () => {
-  emit('close');
-};
+const close = () => emit('close');
 </script>

@@ -2,8 +2,8 @@
   <BaseCard :to="`/oppdrag/${assignment.id}`">
     <BaseImage :src="company.image" :alt="company.name" small />
     <div>
-      <h5 class="fw-bold mb-0">{{ assignment.title }}</h5>
-      <p>{{ assignment.company }}</p>
+      <h5 class="fw-bold">{{ assignment.title }}</h5>
+      <p class="mb-4">{{ company.name }}</p>
       <p class="h6">Mer info &rarr;</p>
     </div>
   </BaseCard>
@@ -22,6 +22,6 @@ const props = defineProps({
 
 // Finn kunde knyttet til oppdrag
 const company = getAll.value.find(
-  (company) => company.name === props.assignment.company
+  (company) => company.id === +props.assignment.company
 );
 </script>

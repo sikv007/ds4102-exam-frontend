@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { computed, ref } from 'vue';
-import { API_URL, HOST } from '../config';
+import { API_URL } from '../config';
 import { deleteData, getData, postData, putData } from '../helpers';
 
 const data = ref([]);
 
 const assignmentUrl = `${API_URL}assignment/`;
 
+// Hent alle oppdrag
 export const getAssignments = async () => {
   const res = await getData(assignmentUrl);
   const assignments = [];
@@ -29,6 +29,7 @@ export const getAssignments = async () => {
   data.value = assignments;
 };
 
+// Legg til oppdrag
 export const postAssignment = async (assignment) => {
   const newAssignment = {
     title: assignment.title,
@@ -40,6 +41,8 @@ export const postAssignment = async (assignment) => {
   await getAssignments();
 };
 
+
+// Rediger oppdrag
 export const putAssignment = async (assignment) => {
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
 
@@ -57,24 +60,29 @@ export const putAssignment = async (assignment) => {
   await getAssignments();
 };
 
+// Slett oppdrag
 export const deleteAssignment = async (id) => {
   await deleteData(`${assignmentUrl}${id}`);
 };
 
+// Hent alle oppdrag
 export const getAll = computed(() => data.value);
 
+// Hent et oppdrag
 export const getOne = (id) =>
   computed(() => data.value.find((assignment) => assignment.id === id));
 
+// Slett oppdrag fra kunden
 export const deleteAssignmentsFromCompany = async (company) => {
   const assignments = getAll.value.filter(
-    (assignment) => assignment.company === company.name
+    (assignment) => +assignment.company === company.id
   );
   assignments.forEach(async (assignment) => {
     await deleteData(`${assignmentUrl}${assignment.id}`);
   });
 };
 
+// Legg til en utvikler på oppdraget
 export const addDeveloperToAssignment = async (developerId, assignment) => {
   const currentAssignment = await getData(`${assignmentUrl}${assignment.id}`);
   if (!currentAssignment.team) currentAssignment.team = [];
@@ -85,6 +93,7 @@ export const addDeveloperToAssignment = async (developerId, assignment) => {
   await getAssignments();
 };
 
+// Fjern en utvikler fra oppdraget
 export const removeDeveloperFromAssignment = async (
   developerId,
   assignment
@@ -100,12 +109,11 @@ export const removeDeveloperFromAssignment = async (
   await getAssignments();
 };
 
-export const price = (price) =>
-  computed(() => new Intl.NumberFormat('nb-NO').format(price));
-
+// Hent antall oppdrag
 export const numberOfAssignments = computed(() => data.value.length);
 
+// Hent oppdrag basert på kunde
 export const getAssignmentsFromCompany = (company) =>
   computed(() =>
-    data.value.filter((assignment) => assignment.company === company.name)
+    data.value.filter((assignment) => +assignment.company === company.id)
   );

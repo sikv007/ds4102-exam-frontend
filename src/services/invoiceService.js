@@ -7,18 +7,7 @@ const data = ref([]);
 
 const invoiceUrl = `${API_URL}invoice/`;
 
-const daysBetween = (date) => {
-  const now = new Date();
-  return Math.round((date - now) / (1000 * 60 * 60 * 24));
-};
-
-// Regn ut driftsinntekter basert på fakturarer
-export const totalEarned = computed(() =>
-  new Intl.NumberFormat('no-NB').format(
-    data.value.map((item) => item.total).reduce((acc, cur) => (acc += cur), 0)
-  )
-);
-
+// Hent fakturaer
 export const getInvoices = async () => {
   const res = await getData(invoiceUrl);
   const invoices = [];
@@ -38,12 +27,28 @@ export const getInvoices = async () => {
   data.value = invoices;
 };
 
+// Regn ut dager mellom to datoer
+const daysBetween = (date) => {
+  const now = new Date();
+  return Math.round((date - now) / (1000 * 60 * 60 * 24));
+};
+
+// Regn ut driftsinntekter basert på fakturarer
+export const totalEarned = computed(() =>
+  new Intl.NumberFormat('no-NB').format(
+    data.value.map((item) => item.total).reduce((acc, cur) => (acc += cur), 0)
+  )
+);
+
+// Hent antall dager til faktura forfaller
 export const daysDue = (invoice) =>
   computed(() => daysBetween(new Date(invoice.dateDue)));
 
+// Hent en faktura
 export const getOne = (id) =>
   computed(() => data.value.find((invoice) => invoice.id === id));
 
+// Legg til faktura
 export const postInvoice = async (invoice) => {
   const now = new Date().getTime();
   const dateDue = invoice.daysDue * 86400000;
@@ -59,6 +64,7 @@ export const postInvoice = async (invoice) => {
   await getInvoices();
 };
 
+// Rediger faktura
 export const putInvoice = async (invoice) => {
   const now = new Date().getTime();
   const dateDue = invoice.daysDue * 86400000;
@@ -80,8 +86,13 @@ export const putInvoice = async (invoice) => {
   await getInvoices();
 };
 
+// Slett faktura
 export const deleteInvoice = async (id) => {
   await deleteData(`${invoiceUrl}${id}`);
 };
 
+// Hent alle fakturaer
 export const getAll = computed(() => data.value);
+
+// Antall faktura
+export const numberOfInvoices = computed(() => data.value.length);

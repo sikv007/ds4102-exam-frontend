@@ -19,13 +19,13 @@
               >
             </li>
             <li class="nav-item">
-              <RouterLink to="/oppdrag" class="nav-link px-0" @click="close"
-                >Oppdrag</RouterLink
+              <RouterLink to="/kunder" class="nav-link px-0" @click="close"
+                >Kunder</RouterLink
               >
             </li>
             <li class="nav-item">
-              <RouterLink to="/kunder" class="nav-link px-0" @click="close"
-                >Kunder</RouterLink
+              <RouterLink to="/oppdrag" class="nav-link px-0" @click="close"
+                >Oppdrag</RouterLink
               >
             </li>
             <li class="nav-item">

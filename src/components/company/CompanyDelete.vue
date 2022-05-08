@@ -6,8 +6,8 @@
         Handlingen vil slette nåværende oppdrag knyttet til kunden og kan ikke
         angres.
       </p>
-      <div class="col d-flex gap-4">
-        <BaseButton warning @click="submitForm" title="Bekreft" />
+      <div class="col d-flex gap-4 pt-4">
+        <BaseButton cta @click="submitForm" title="Bekreft" />
         <BaseButton outline @click="modal.toggleDeleteModal" title="Avbryt" />
       </div>
     </div>
@@ -46,7 +46,7 @@ const submitForm = async () => {
   const assignment = getAssignmentsFromCompany(company).value;
 
   // Fjern utviklere fra oppdrag knyttet til bedriften om oppdrag eksisterer slik at de blir ledig for nye oppdrag
-  if (assignment.value) {
+  if (assignment.team) {
     assignment.forEach((assignment) => {
       assignment.team.forEach(async (developer) => {
         await removeAssignmentFromDeveloper(+developer);

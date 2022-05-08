@@ -50,3 +50,9 @@ export const postImage = async (url, payload) => {
     config: { header: { 'Content-Type': 'multipart/form-data' } },
   });
 };
+
+// Generisk funksjon for å formatere datoer
+export const formatDate = (date) => new Date(date).toLocaleDateString('no-NB');
+
+// Generisk funksjon for å formatere priser/tall
+export const formatPrice = (price) => new Intl.NumberFormat('nb-NO').format(price);

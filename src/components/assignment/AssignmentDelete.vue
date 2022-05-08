@@ -3,8 +3,8 @@
     <div class="row">
       <h3 class="fw-bold">Ønsker du å slette dette Oppdraget?</h3>
       <p>Handlingen kan ikke angres.</p>
-      <div class="col d-flex gap-4">
-        <BaseButton warning @click="submitForm" title="Bekreft" />
+      <div class="col d-flex gap-4 pt-4">
+        <BaseButton cta @click="submitForm" title="Bekreft" />
         <BaseButton outline @click="modal.toggleDeleteModal" title="Avbryt" />
       </div>
     </div>
@@ -35,18 +35,14 @@ const assignment = getOne(props.id).value;
 
 // Submit Skjema
 const submitForm = async () => {
-  modal.deleteModalVisible.value = false;
-
   // Fjern utviklere fra oppdrag når det slettes slik at de blir ledig for nye oppdrag
   if (assignment.team) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     assignment.team.forEach(async (developer) => {
       await removeAssignmentFromDeveloper(+developer);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
     });
   }
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   await deleteAssignment(assignment.id);
+  modal.deleteModalVisible.value = false;
   router.back();
   await getAssignments();
 };

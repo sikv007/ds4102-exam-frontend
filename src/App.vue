@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+// Vue
 import { ref } from 'vue';
 
 // Komponenter
@@ -28,6 +29,7 @@ const menuVisible = ref(false);
 // Vis/Skjul Navigasjon
 const toggleNav = () => (menuVisible.value = !menuVisible.value);
 
+// Lukk navigasjon
 const closeNav = () => {
   menuVisible.value = false;
 };

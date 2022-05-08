@@ -1,5 +1,11 @@
 <template>
-  <div v-if="developer" class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else-if="!developer" class="container pt-2 pb-5">
+    <BaseAlert message="Utvikleren du ser etter finnes ikke" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <BaseModal
       :show="modal.formModalVisible.value"
       form
@@ -77,6 +83,7 @@ import DeveloperDelete from '../components/developer/DeveloperDelete.vue';
 // Service
 import { getOne, fullName } from '../services/developerService';
 import * as modal from '../services/modalService';
+import { error } from '../services/appService';
 
 // Props
 const props = defineProps({

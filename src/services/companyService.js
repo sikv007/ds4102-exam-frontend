@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { computed, ref } from 'vue';
 import { API_URL, HOST } from '../config';
 import { deleteData, getData, postData, postImage, putData } from '../helpers';
@@ -28,10 +27,12 @@ export const getCompanies = async () => {
   data.value = companies;
 };
 
+// Bildeopplasting for kunde
 const postCompanyImage = async (image) => {
   await postImage(companyUrl, image);
 };
 
+// Legg til kunde
 export const postCompany = async (company, image) => {
   const newCompany = {
     name: company.name,
@@ -46,12 +47,15 @@ export const postCompany = async (company, image) => {
   await getCompanies();
 };
 
+// Rediger kunde
 export const putCompany = async (company, image) => {
+  const currentCompany = await getData(`${companyUrl}${company.id}`);
+
   const editedCompany = {
-    id: company.id,
+    id: currentCompany.id,
     name: company.name,
     address: company.address,
-    assignments: company.assignments?.join(',') || null,
+    assignments: currentCompany.assignments,
     contactName: company.contactName,
     contactEmail: company.contactEmail,
     organizationNumber: company.organizationNumber,
@@ -68,28 +72,32 @@ export const putCompany = async (company, image) => {
   await getCompanies();
 };
 
+// Slett kunde
 export const deleteCompany = async (id) => {
   await deleteData(`${companyUrl}${id}`);
 };
 
+// Hent alle kunder
 export const getAll = computed(() => data.value);
 
+// Hent en kunde
 export const getOne = (id) =>
   computed(() => data.value.find((company) => company.id === id));
 
+// Generer en liste basert på kundenavn
 export const companyList = computed(() =>
   data.value.map((company) => company.name)
 );
 
+// Finn kunde basert på oppdrag
 export const findCompanyByAssignment = (assignment) =>
   computed(() =>
-    data.value.find((company) => company.name === assignment.value.company)
+    data.value.find((company) => company.id === +assignment.value.company)
   );
 
+// Legg et oppdrag til kunden
 export const addAssignmentToCompany = async (company, assignment) => {
   const currentCompany = await getData(`${companyUrl}${company.id}`);
-  console.log(currentCompany);
-  console.log(!currentCompany.assignments);
   if (!currentCompany.assignments) currentCompany.assignments = [];
   else currentCompany.assignments = currentCompany.assignments.split(',');
   currentCompany.assignments.push(assignment.title);
@@ -98,4 +106,5 @@ export const addAssignmentToCompany = async (company, assignment) => {
   await getCompanies();
 };
 
+// Hent antall kunder
 export const numberOfCompanies = computed(() => data.value.length);

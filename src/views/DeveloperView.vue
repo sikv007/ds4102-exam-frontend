@@ -1,5 +1,8 @@
 <template>
-  <div class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5 px-4">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <div class="row gx-0">
       <BaseModal
         :show="modal.formModalVisible.value"
@@ -23,11 +26,8 @@
         </div>
       </div>
       <div class="row gx-4">
-        <BaseEmpty
-          v-if="developers.getAll.value.length === 0"
-          title="Fant ingen utviklere..."
-        />
-        <DeveloperList card v-else :data="developers.getAll.value" />
+        <BaseAlert v-if="numberOfDevs === 0" message="Fant ingen utviklere" />
+        <DeveloperList card v-else :data="getAll" />
       </div>
     </div>
   </div>
@@ -40,5 +40,6 @@ import DeveloperAdd from '../components/developer/DeveloperAdd.vue';
 
 // Service
 import * as modal from '../services/modalService';
-import * as developers from '../services/developerService';
+import { getAll, numberOfDevs } from '../services/developerService';
+import { error } from '../services/appService';
 </script>

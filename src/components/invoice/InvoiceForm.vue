@@ -110,7 +110,6 @@ let invoice;
 
 // Sett data hvis man redigerer
 if (props.id) {
-  console.log(props.id);
   invoice = getOne(+props.id);
   form.product = invoice.value.product;
   form.total = invoice.value.total;

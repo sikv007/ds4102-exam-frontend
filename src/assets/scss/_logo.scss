@@ -1,5 +1,9 @@
 @use 'variables';
 
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
+
 .logo {
   display: flex;
   align-items: center;
@@ -7,12 +11,12 @@
 
   .logo-icon {
     fill: variables.$primary;
-    height: 28px;
+    height: 18px;
   }
   .logo-letter {
     fill: variables.$primary-shade;
     transition: variables.$transition;
-    height: 24px;
+    height: 16px;
   }
 
   &:hover {
@@ -40,6 +44,19 @@
       .logo-letter {
         fill: variables.$primary;
       }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .logo {
+    gap: 8px;
+
+    .logo-icon {
+      height: 28px;
+    }
+    .logo-letter {
+      height: 24px;
     }
   }
 }

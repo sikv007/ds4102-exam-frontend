@@ -12,6 +12,7 @@
 </template>
 
 <script setup>
+// Props
 const props = defineProps({
   title: {
     type: String,

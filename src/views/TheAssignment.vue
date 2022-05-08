@@ -1,5 +1,11 @@
 <template>
-  <section v-if="assignment" class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else-if="!assignment" class="container pt-2 pb-5">
+    <BaseAlert message="Oppdraget du ser etter finnes ikke" />
+  </div>
+  <section v-else class="container pt-2 pb-5">
     <BaseModal
       :show="modal.formModalVisible.value"
       form
@@ -107,7 +113,6 @@ import {
   getOne,
   addDeveloperToAssignment,
   removeDeveloperFromAssignment,
-  price,
 } from '../services/assigmentService';
 import {
   addAssignmentToDeveloper,
@@ -115,6 +120,7 @@ import {
   getAvailableDevelopers,
   getDevelopersFromAssignment,
 } from '../services/developerService';
+import { error } from '../services/appService';
 
 // Props
 const props = defineProps({

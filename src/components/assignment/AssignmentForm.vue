@@ -8,7 +8,8 @@
           type="text"
           id="title"
           v-model="form.title"
-          placeholder="Ny nettside for Høyskolen Kristiania"
+          placeholder="Ny nettside"
+          required
         />
       </div>
     </div>
@@ -33,22 +34,12 @@
           id="price"
           v-model.number="form.price"
           placeholder="400 000"
+          required
         />
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div
-          v-if="form.error !== 'pending'"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ form.message }}
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
+    <div class="row pt-4">
+      <div class="col d-flex gap-4">
         <BaseButton type="submit" cta :title="button" />
         <BaseButton type="button" outline @click="closeForm" title="Avbryt" />
       </div>
@@ -60,7 +51,10 @@
 // Service
 import { reactive } from '@vue/reactivity';
 import { getOne } from '../../services/assigmentService';
-import { companyList } from '../../services/companyService';
+import {
+  companyList,
+  findCompanyByAssignment,
+} from '../../services/companyService';
 
 // Props
 const props = defineProps({
@@ -85,8 +79,6 @@ const form = reactive({
   title: '',
   company: companyList.value[0],
   price: null,
-  error: 'pending',
-  message: null,
 });
 
 let assignment;
@@ -98,8 +90,11 @@ if (props.id) {
   form.price = assignment.value.price;
   form.id = assignment.value.id;
   form.startDate = assignment.value.startDate;
+
+  const company = findCompanyByAssignment(assignment);
+
   form.company =
-    companyList.value[companyList.value.indexOf(assignment.value.company)];
+    companyList.value[companyList.value.indexOf(company.value.name)];
 }
 
 // Submit Skjema

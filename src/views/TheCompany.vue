@@ -1,5 +1,11 @@
 <template>
-  <div v-if="company" class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else-if="!company" class="container pt-2 pb-5">
+    <BaseAlert message="Kunden du ser etter finnes ikke" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <BaseModal
       :show="modal.formModalVisible.value"
       form
@@ -46,6 +52,7 @@ import CompanyDetails from '../components/company/CompanyDetails.vue';
 import { getOne } from '../services/companyService';
 import { getAssignmentsFromCompany } from '../services/assigmentService';
 import * as modal from '../services/modalService';
+import { error } from '../services/appService';
 
 // Props
 const props = defineProps({

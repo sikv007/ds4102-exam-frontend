@@ -16,6 +16,7 @@
         >
           <h1 class="fw-bold">Faktura</h1>
           <BaseButton
+            v-if="numberOfCompanies !== 0"
             cta
             @click="modal.toggleFormModal"
             title="Legg til faktura"
@@ -26,8 +27,9 @@
         </div>
       </div>
       <div class="row gx-4">
-        <BaseEmpty v-if="getAll.length <= 0" />
-        <InvoiceList />
+        <BaseAlert v-if="numberOfCompanies === 0" message="For å legge til oppdrag må du først legge til kunder" />
+        <BaseAlert v-else-if="numberOfInvoices === 0" message="Fant ingen fakturaer" />
+        <InvoiceList v-else />
       </div>
     </div>
   </div>
@@ -40,6 +42,7 @@ import InvoiceAdd from '../components/invoice/InvoiceAdd.vue';
 
 // Service
 import * as modal from '../services/modalService';
-import { getAll } from '../services/invoiceService';
+import { getAll, numberOfInvoices } from '../services/invoiceService';
 import { error } from '../services/appService';
+import { numberOfCompanies } from '../services/companyService';
 </script>

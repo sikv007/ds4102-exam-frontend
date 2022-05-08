@@ -5,8 +5,10 @@
 </template>
 
 <script setup>
-import { computed } from "@vue/runtime-core";
+// Vue
+import { computed } from "vue";
 
+// Props
 const props = defineProps({
   src: {
     type: String,
@@ -22,6 +24,7 @@ const props = defineProps({
   },
 });
 
+// Bildeklasse
 const imageClass = computed(() => {
   if (props.small) return { "img-rounded--small": true };
   if (props.preview) return { "img-rounded--preview": true };

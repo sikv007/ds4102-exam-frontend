@@ -7,6 +7,7 @@
           class="form-control"
           type="text"
           id="name"
+          required
           v-model="form.name"
           placeholder="Bedrift AS"
         />
@@ -17,6 +18,7 @@
           class="form-control"
           type="text"
           id="address"
+          required
           v-model="form.address"
           placeholder="Kirkeveien 2, 0450 OSLO"
         />
@@ -30,6 +32,7 @@
           class="form-control"
           type="text"
           id="contactName"
+          required
           v-model="form.contactName"
           placeholder="Siri Jensen"
         />
@@ -40,6 +43,7 @@
           class="form-control"
           type="email"
           id="contactEmail"
+          required
           v-model="form.contactEmail"
           placeholder="sirijensen@bedrift.no"
         />
@@ -54,6 +58,7 @@
         <input
           class="form-control"
           type="number"
+          required
           id="organizationNumber"
           v-model.number="form.organizationNumber"
           placeholder="48003000"
@@ -65,6 +70,7 @@
           <input
             class="form-control"
             @change="setImage"
+            :required="!edit"
             type="file"
             id="image"
           />
@@ -72,7 +78,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row pt-4">
       <div class="col d-flex gap-4">
         <BaseButton type="submit" cta :title="button" />
         <BaseButton type="button" @click="closeForm" outline title="Avbryt" />
@@ -83,7 +89,7 @@
 
 <script setup>
 // Service
-import { reactive } from '@vue/reactivity';
+import { reactive, ref } from 'vue';
 import { getOne } from '../../services/companyService';
 import * as modal from '../../services/modalService';
 
@@ -114,6 +120,8 @@ const form = reactive({
   organizationNumber: null,
 });
 
+const edit = ref(false);
+
 const image = new FormData();
 
 const setImage = (e) => {
@@ -125,6 +133,7 @@ let company;
 
 // Sett verdier i skjema hvis man rediger
 if (props.id) {
+  edit.value = true;
   company = getOne(props.id);
   form.name = company.value.name;
   form.address = company.value.address;

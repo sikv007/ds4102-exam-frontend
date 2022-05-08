@@ -1,5 +1,9 @@
 @use 'variables';
 
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
+
 .header {
   background-color: variables.$background-light-3;
   box-shadow: variables.$shadow-small;
@@ -7,14 +11,14 @@
 
   .hamburger {
     border: 0;
-    width: 3rem;
+    width: 2.5rem;
     background: none;
-    line-height: 0.8;
+    line-height: 0.6;
     cursor: pointer;
 
     span {
       background-color: variables.$primary-shade;
-      height: 4px;
+      height: 2px;
       width: 100%;
       display: inline-block;
       transition: variables.$transition-bezier;
@@ -45,6 +49,19 @@
         span {
           background-color: variables.$primary;
         }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .header {
+    .hamburger {
+      width: 3rem;
+      line-height: 0.8;
+
+      span {
+        height: 4px;
       }
     }
   }

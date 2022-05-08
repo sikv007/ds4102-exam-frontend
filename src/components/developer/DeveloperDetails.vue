@@ -6,7 +6,7 @@
   <div class="d-flex gap-2 align-items-center">
     <BaseIcon icon="calendar" />
     <strong class="mb-0">Fødselsdato:</strong>
-    <p class="mb-0">{{ dateOfBirth(developer).value }}</p>
+    <p class="mb-0">{{ formatDate(developer.dateOfBirth) }}</p>
   </div>
   <div class="d-flex gap-2 align-items-center">
     <BaseIcon icon="mail" />
@@ -22,7 +22,8 @@
 
 <script setup>
 // Service
-import { fullName, dateOfBirth } from '../../services/developerService';
+import { formatDate } from '../../helpers';
+import { fullName } from '../../services/developerService';
 
 // Props
 const props = defineProps({

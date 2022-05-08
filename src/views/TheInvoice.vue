@@ -1,5 +1,11 @@
 <template>
-  <div v-if="invoice" class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else-if="!invoice" class="container pt-2 pb-5">
+    <BaseAlert message="Fakturaen du ser etter finnes ikke" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <BaseModal
       :show="modal.formModalVisible.value"
       form
@@ -39,6 +45,7 @@ import InvoiceDelete from '../components/invoice/InvoiceDelete';
 // Service
 import { getOne } from '../services/invoiceService';
 import * as modal from '../services/modalService';
+import { error } from '../services/appService';
 
 // Props
 const props = defineProps({

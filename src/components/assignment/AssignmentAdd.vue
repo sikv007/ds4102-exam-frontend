@@ -1,6 +1,6 @@
 <template>
   <AssignmentForm
-    title="Legg til utvikler"
+    title="Legg til oppdrag"
     button="Legg til"
     @submit-form="submitForm"
     @close-form="modal.toggleFormModal"
@@ -18,12 +18,13 @@ import * as modal from '../../services/modalService';
 
 // Submit Skjema
 const submitForm = async (data) => {
-  await postAssignment(data);
   const company = getAll.value.find((company) => company.name === data.company);
+
+  await postAssignment({ ...data, company: String(company.id) });
 
   // Legg oppdraget til kunden
   await addAssignmentToCompany(company, data);
-  
+
   modal.toggleFormModal();
 };
 </script>

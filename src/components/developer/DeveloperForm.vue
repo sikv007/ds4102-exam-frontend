@@ -71,6 +71,7 @@
           <input
             class="form-control"
             @change="setImage"
+            :required="!edit"
             type="file"
             id="image"
           />
@@ -97,19 +98,7 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col">
-        <div
-          v-if="form.error !== 'pending'"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ form.message }}
-        </div>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row pt-4">
       <div class="col d-flex gap-4">
         <BaseButton type="submit" cta :title="button" />
         <BaseButton type="button" @click="closeForm" outline title="Avbryt" />
@@ -120,8 +109,7 @@
 
 <script setup>
 // Service
-import { useValidate } from '../../hooks/useInput';
-import { reactive } from '@vue/reactivity';
+import { reactive, ref, watch } from 'vue';
 import { jobTitles, getOne, skills } from '../../services/developerService';
 import * as modal from '../../services/modalService';
 
@@ -151,9 +139,10 @@ const form = reactive({
   dateOfBirth: null,
   jobTitle: jobTitles[0],
   skills: [],
-  error: 'pending',
   message: null,
 });
+
+const edit = ref(false);
 
 const image = new FormData();
 
@@ -166,6 +155,7 @@ let developer;
 
 // Sett verdier i skjema hvis man redigerer
 if (props.id) {
+  edit.value = true;
   developer = getOne(props.id);
   form.firstName = developer.value.firstName;
   form.lastName = developer.value.lastName;
@@ -178,11 +168,9 @@ if (props.id) {
 
 const submitForm = () => {
   emit('submit-form', form, image);
-  console.log('Submit');
 };
 
 const closeForm = () => {
   emit('close-form');
-  console.log('Close');
 };
 </script>

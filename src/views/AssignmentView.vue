@@ -1,5 +1,8 @@
 <template>
-  <div class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <div class="row gx-0">
       <BaseModal
         :show="modal.formModalVisible.value"
@@ -25,15 +28,15 @@
         </div>
       </div>
       <div class="row gx-4">
-        <!-- <BaseEmpty
-          v-if="companies.getAll.value.length === 0"
-          title="For å kunne legge til oppdrag må du først legge til en kunde."
-        /> -->
-        <BaseEmpty
-          v-if="assignments.length === 0"
-          title="Fant ingen oppdrag."
+        <BaseAlert
+          v-if="numberOfCompanies === 0"
+          message="For å legge til oppdrag må du først legge til kunder"
         />
-        <AssignmentList />
+        <BaseAlert
+          v-else-if="numberOfAssignments === 0"
+          message="Fant ingen oppdrag"
+        />
+        <AssignmentList v-else />
       </div>
     </div>
   </div>
@@ -46,6 +49,10 @@ import AssignmentAdd from '../components/assignment/AssignmentAdd.vue';
 
 // Service
 import * as modal from '../services/modalService';
-import { getAll as assignments } from '../services/assigmentService';
+import {
+  getAll as assignments,
+  numberOfAssignments,
+} from '../services/assigmentService';
 import { numberOfCompanies } from '../services/companyService';
+import { error } from '../services/appService';
 </script>

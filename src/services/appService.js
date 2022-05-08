@@ -5,6 +5,7 @@ export const error = reactive({
   message: '',
 });
 
+// Sett error melding hvis en error oppstår
 export const setError = (val = false, message) => {
   error.value = val;
   error.message = message;

@@ -1,5 +1,8 @@
 <template>
-  <div class="container pt-2 pb-5">
+  <div v-if="error.value" class="container pt-2 pb-5">
+    <BaseAlert :message="error.message" />
+  </div>
+  <div v-else class="container pt-2 pb-5">
     <div class="row gx-0">
       <BaseModal
         :show="modal.formModalVisible.value"
@@ -23,8 +26,8 @@
         </div>
       </div>
       <div class="row gx-4">
-        <!-- <base-empty v-if="getAll.length <= 0"></base-empty> -->
-        <company-list></company-list>
+        <BaseAlert v-if="numberOfCompanies === 0" message="Fant ingen kunder" />
+        <CompanyList v-else />
       </div>
     </div>
   </div>
@@ -37,4 +40,6 @@ import CompanyAdd from '../components/company/CompanyAdd.vue';
 
 // Service
 import * as modal from '../services/modalService';
+import { numberOfCompanies } from '../services/companyService';
+import { error } from '../services/appService';
 </script>
